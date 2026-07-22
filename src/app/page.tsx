@@ -11,13 +11,14 @@ import About from '@/components/About';
 import Services from '@/components/Services';
 import Portfolio from '@/components/Portfolio';
 import Contact from '@/components/Contact';
+import FloatingPhotoGallery from '@/components/FloatingPhotoGallery';
 
 // Dynamically import the 3D Canvas with SSR disabled to prevent Node compile errors
 const Canvas3D = dynamic(() => import('@/components/Canvas3D'), { ssr: false });
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState('home');
-  const [currentColor, setCurrentColor] = useState('#06b6d4'); // Default skin color (cyan)
+  const [currentColor, setCurrentColor] = useState('#06b6d4');
   const [isMobile, setIsMobile] = useState(false);
   const [mounted, setMounted] = useState(false);
 
@@ -25,7 +26,6 @@ export default function Home() {
     setMounted(true);
   }, []);
 
-  // Monitor screen width to toggle between full-screen 3D HUD & responsive scroll stack
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 992);
@@ -38,24 +38,17 @@ export default function Home() {
   const handleNavigate = (id: string) => {
     setActiveSection(id);
     if (isMobile) {
-      // In mobile mode, we scroll to the element normally
       const element = document.getElementById(id);
       if (element) {
         const offset = 80;
         const bodyRect = document.body.getBoundingClientRect().top;
         const elementRect = element.getBoundingClientRect().top;
-        const elementPosition = elementRect - bodyRect;
-        const offsetPosition = elementPosition - offset;
-
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: 'smooth',
-        });
+        const offsetPosition = elementRect - bodyRect - offset;
+        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
       }
     }
   };
 
-  // Stagger configurations for desktop HUD transition fades
   const transitionConfig = { duration: 0.4, ease: 'easeOut' } as const;
 
   if (!mounted) {
@@ -74,16 +67,44 @@ export default function Home() {
       {/* 3D cosmos planetary flight background */}
       <Canvas3D color={currentColor} activeSection={activeSection} />
 
-      {/* Custom snapping cursor ring */}
+      {/* Ambient cursor glow */}
       <CursorGlow />
 
-      {/* Floating Theme Controller */}
+      {/* Floating Theme Controller (bottom-right) */}
       <ThemeToggle currentColor={currentColor} setCurrentColor={setCurrentColor} />
 
       {/* Floating Top Navigation */}
       <Navbar activeSection={activeSection} setActiveSection={handleNavigate} />
 
-      {/* Responsive Layout Router */}
+      {/* ── RIGHT-SIDE FLOATING PHOTO CARDS (only on home, desktop) ── */}
+      {!isMobile && (
+        <AnimatePresence>
+          {activeSection === 'home' && (
+            <motion.div
+              key="photo-gallery"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ duration: 0.5, ease: 'easeOut' }}
+              style={{
+                position: 'fixed',
+                // Sits in the right half, vertically centered
+                top: '50%',
+                left: '58%',
+                transform: 'translate(0, -50%)',
+                width: 380,
+                height: 440,
+                zIndex: 12,
+                pointerEvents: 'auto',
+              }}
+            >
+              <FloatingPhotoGallery />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      )}
+
+      {/* ── RESPONSIVE LAYOUT ROUTER ── */}
       <div className="interactive-content">
         {isMobile ? (
           /* Mobile View: Stack sections sequentially */

@@ -3,10 +3,8 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Download } from 'lucide-react';
-import dynamic from 'next/dynamic';
 import Terminal from './Terminal';
 import Magnetic from './Magnetic';
-import ProfileCard3D from './ProfileCard3D';
 import styles from './Hero.module.css';
 
 interface HeroProps {
@@ -119,15 +117,7 @@ export default function Hero({ onNavigate, skinColor }: HeroProps) {
             </motion.div>
           </div>
 
-          {/* ── MIDDLE: 3D Profile Card ────────────────── */}
-          <motion.div
-            variants={itemVariants}
-            className={styles.profileCardWrapper}
-          >
-            <ProfileCard3D />
-          </motion.div>
-
-          {/* ── BOTTOM: Interactive Terminal ───────────── */}
+          {/* ── Interactive Terminal ───────────── */}
           <motion.div variants={itemVariants} className={styles.heroVisual}>
             <Terminal skinColor={skinColor} />
           </motion.div>
