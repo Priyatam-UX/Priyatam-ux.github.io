@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowRight, Download, ChevronsDown } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { ArrowRight, Download } from 'lucide-react';
 import Terminal from './Terminal';
 import Magnetic from './Magnetic';
 import styles from './Hero.module.css';
@@ -19,11 +19,6 @@ export default function Hero({ onNavigate, skinColor }: HeroProps) {
   const [currentText, setCurrentText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
   const [typingSpeed, setTypingSpeed] = useState(150);
-
-  // Scroll parallax for fade out
-  const { scrollY } = useScroll();
-  const heroOpacity = useTransform(scrollY, [0, 300], [1, 0]);
-  const heroScale = useTransform(scrollY, [0, 300], [1, 0.95]);
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -75,15 +70,12 @@ export default function Hero({ onNavigate, skinColor }: HeroProps) {
   } as const;
 
   return (
-    <motion.div 
-      style={{ opacity: heroOpacity, scale: heroScale, width: '100%', height: '100%', position: 'relative', display: 'flex', alignItems: 'center' }}
-    >
-      <div style={{ width: '100%' }}>
+    <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}>
+      <div className="hud-scrollable">
         <motion.div
           variants={containerVariants}
           initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
+          animate="visible"
           className={styles.heroGrid}
         >
           <div className={styles.heroContent}>
@@ -92,7 +84,7 @@ export default function Hero({ onNavigate, skinColor }: HeroProps) {
             </motion.h3>
             
             <motion.h1 variants={itemVariants} className={styles.profession}>
-              And I'm a <br />
+              And I'm a{' '}
               <span className={styles.typedText}>{currentText}</span>
               <span className={styles.cursor}>|</span>
             </motion.h1>
@@ -113,7 +105,7 @@ export default function Hero({ onNavigate, skinColor }: HeroProps) {
                   className="btn"
                   style={{ display: 'inline-flex', alignItems: 'center', gap: 10 }}
                 >
-                  Hire Me <ArrowRight size={18} />
+                  Hire Me <ArrowRight size={16} />
                 </a>
               </Magnetic>
               <Magnetic>
@@ -124,7 +116,7 @@ export default function Hero({ onNavigate, skinColor }: HeroProps) {
                   className={styles.btnSecondary}
                   style={{ display: 'inline-flex', alignItems: 'center', gap: 10 }}
                 >
-                  Download CV <Download size={18} />
+                  Download CV <Download size={16} />
                 </a>
               </Magnetic>
             </motion.div>
@@ -136,18 +128,6 @@ export default function Hero({ onNavigate, skinColor }: HeroProps) {
           </div>
         </motion.div>
       </div>
-
-      {/* Floating Scroll Indicator */}
-      <motion.div 
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 0.5, y: 0 }}
-        transition={{ delay: 1.5, duration: 0.8 }}
-        className={styles.scrollIndicator}
-        onClick={() => onNavigate('about')}
-      >
-        <span>Scroll Down</span>
-        <ChevronsDown className={styles.scrollArrow} size={18} />
-      </motion.div>
-    </motion.div>
+    </div>
   );
 }
