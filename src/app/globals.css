@@ -10,37 +10,43 @@
 
 :root {
   /* Cyberpunk Universe Dark Theme */
-  --bg-color: #010103;
-  --bg-secondary: #04040a;
-  --bg-card: rgba(4, 4, 12, 0.7);
-  --bg-navbar: rgba(1, 1, 3, 0.85);
-  
+  --bg-color: #020208;
+  --bg-secondary: #060614;
+  --bg-card: rgba(6, 6, 20, 0.92);
+  --bg-navbar: rgba(2, 2, 8, 0.97);
+
   --text-color: #e5e9f0;
   --text-muted: #6e7687;
   --text-inverse: #010103;
-  
-  --border-color: rgba(6, 182, 212, 0.15); /* Neon cyan border */
-  --border-glass: rgba(168, 85, 247, 0.2); /* Neon purple glass */
-  
-  --skin-color: #06b6d4; /* Default: Neon Cyan */
-  --skin-glow: rgba(6, 182, 212, 0.2);
-  --skin-glow-strong: rgba(6, 182, 212, 0.5);
-  
-  --shadow-color: rgba(0, 0, 0, 0.9);
+
+  --border-color: rgba(6, 182, 212, 0.18);
+  --border-glass: rgba(168, 85, 247, 0.25);
+  --border-active: rgba(6, 182, 212, 0.55);
+
+  --skin-color: #06b6d4;
+  --skin-glow: rgba(6, 182, 212, 0.22);
+  --skin-glow-strong: rgba(6, 182, 212, 0.55);
+
+  --shadow-color: rgba(0, 0, 0, 0.95);
+  --shadow-hover: rgba(0, 0, 0, 0.6);
   --transition-speed: 0.3s;
-  
+
   /* Cyberpunk accents */
   --color-cyan: #06b6d4;
   --color-purple: #a855f7;
   --color-orange: #fa5b0f;
   --color-green: #10b981;
   --color-pink: #f43f5e;
+
+  /* HUD Panel dimensions */
+  --hud-width: 500px;
+  --hud-top: 82px;
 }
 
 html, body {
   width: 100vw;
   height: 100vh;
-  overflow: hidden; /* Lock viewport scrolling on desktop */
+  overflow: hidden;
   background-color: var(--bg-color);
   color: var(--text-color);
   font-family: var(--font-inter), sans-serif;
@@ -52,70 +58,215 @@ html, body {
 }
 
 /* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--skin-color); }
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-title), sans-serif;
+  color: var(--text-color);
+  letter-spacing: -0.02em;
 }
 
-::-webkit-scrollbar-track {
-  background: var(--bg-color);
+.section-title {
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-color);
+  position: relative;
+  flex-shrink: 0;
 }
 
-::-webkit-scrollbar-thumb {
-  background: var(--border-color);
-  border-radius: 4px;
+.section-title h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  display: inline-block;
+  background: linear-gradient(90deg, #ffffff 30%, var(--skin-color) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: var(--skin-color);
+.section-title h2::before {
+  content: '// ';
+  font-family: var(--font-mono), monospace;
+  font-size: 0.75rem;
+  color: var(--skin-color);
+  opacity: 0.7;
+  -webkit-text-fill-color: var(--skin-color);
 }
 
-/* Scanlines overlay */
-.scanlines::before {
-  content: " ";
+.section-title h2::after {
+  content: '';
   display: block;
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.04));
-  z-index: 9999;
-  background-size: 100% 4px, 3px 100%;
-  pointer-events: none;
-  opacity: 0.35;
+  width: 40px;
+  height: 2px;
+  background: var(--skin-color);
+  margin-top: 8px;
+  box-shadow: 0 0 8px var(--skin-color);
+  border-radius: 2px;
 }
 
-/* Cyber Card base styling */
-.cyber-card {
-  background: var(--bg-card);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.6), inset 0 0 12px rgba(6, 182, 212, 0.03);
+/* Buttons */
+.btn {
+  background-color: transparent;
+  color: var(--skin-color);
+  border: 1px solid var(--skin-color);
+  padding: 11px 28px;
+  border-radius: 3px;
+  font-family: var(--font-mono), monospace;
+  font-weight: 600;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  cursor: pointer;
+  box-shadow: 0 0 12px var(--skin-glow), inset 0 0 8px var(--skin-glow);
+  position: relative;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.btn:hover {
+  background-color: var(--skin-color);
+  color: var(--text-inverse);
+  box-shadow: 0 0 22px var(--skin-glow-strong);
+  transform: translateY(-2px);
+}
+
+/* =========================================
+   HUD PANEL SYSTEM
+   Fixed glass overlays sitting on top of the
+   WebGL canvas. Left = .hud-wrapper,
+   Right = .hud-wrapper.hud-wrapper-right
+   ========================================= */
+
+.main-wrapper {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+}
+
+.interactive-content {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* Left-aligned HUD */
+.hud-wrapper {
+  position: absolute;
+  top: var(--hud-top);
+  bottom: 24px;
+  left: 30px;
+  width: var(--hud-width);
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Right-aligned HUD */
+.hud-wrapper-right {
+  left: auto;
+  right: 30px;
+}
+
+/* The actual glass card */
+.hud-panel {
+  width: 100%;
+  height: 100%;
+  /* Very dark, almost opaque glass — #06060e at 93% */
+  background: linear-gradient(160deg, rgba(8, 8, 22, 0.96) 0%, rgba(4, 4, 14, 0.98) 100%);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  /* Neon accent left border stripe */
+  border: 1px solid rgba(6, 182, 212, 0.2);
+  border-left: 3px solid var(--skin-color);
+  border-radius: 8px;
+  padding: 28px 26px 22px 26px;
+  display: flex;
+  flex-direction: column;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.03),
+    0 20px 60px rgba(0,0,0,0.95),
+    0 0 40px rgba(6,182,212,0.06),
+    inset 0 1px 0 rgba(255,255,255,0.05);
+  pointer-events: auto;
   position: relative;
   overflow: hidden;
-  transition: all 0.3s cubic-bezier(0.2, 1, 0.2, 1);
 }
 
-.cyber-card::before {
+/* Right-panel flips the accent stripe to right side */
+.hud-wrapper-right .hud-panel {
+  border-left: 1px solid rgba(6, 182, 212, 0.2);
+  border-right: 3px solid var(--skin-color);
+}
+
+/* Top-right corner tech brackets */
+.hud-panel::before {
   content: '';
   position: absolute;
   top: 0;
-  left: 0;
-  width: 6px;
-  height: 6px;
-  background-color: var(--skin-color);
-  z-index: 5;
+  right: 0;
+  width: 28px;
+  height: 28px;
+  border-top: 2px solid var(--skin-color);
+  border-right: 2px solid var(--skin-color);
+  border-radius: 0 6px 0 0;
+  opacity: 0.6;
+  pointer-events: none;
 }
 
-/* Laser border card */
+/* Bottom-left tech bracket */
+.hud-panel::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 28px;
+  height: 28px;
+  border-bottom: 2px solid var(--skin-color);
+  border-left: 2px solid var(--skin-color);
+  border-radius: 0 0 0 6px;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Scrollable content area inside the panel */
+.hud-scrollable {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 8px;
+  margin-top: 8px;
+}
+
+.hud-scrollable::-webkit-scrollbar { width: 3px; }
+.hud-scrollable::-webkit-scrollbar-track { background: transparent; }
+.hud-scrollable::-webkit-scrollbar-thumb { background: var(--skin-color); border-radius: 2px; opacity: 0.5; }
+
+/* =========================================
+   Cyber / Laser Cards
+   ========================================= */
+.cyber-card {
+  background: rgba(8, 8, 24, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.6), inset 0 0 12px rgba(6,182,212,0.03);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.2,1,0.2,1);
+}
+
 .laser-card {
   position: relative;
   border-radius: 6px;
   overflow: hidden;
-  background: rgba(5, 5, 12, 0.4);
+  background: rgba(5,5,14,0.5);
   padding: 1px;
   z-index: 1;
   transition: all var(--transition-speed) ease;
@@ -128,11 +279,7 @@ html, body {
   left: -50%;
   width: 200%;
   height: 200%;
-  background: conic-gradient(
-    transparent,
-    var(--skin-color),
-    transparent 25%
-  );
+  background: conic-gradient(transparent, var(--skin-color), transparent 25%);
   animation: rotateLaser 4s linear infinite;
   z-index: -1;
   opacity: 0;
@@ -140,21 +287,15 @@ html, body {
   pointer-events: none;
 }
 
-.laser-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 25px var(--skin-glow);
-}
-
-.laser-card:hover::after {
-  opacity: 1;
-}
+.laser-card:hover { transform: translateY(-3px); box-shadow: 0 8px 25px var(--skin-glow); }
+.laser-card:hover::after { opacity: 1; }
 
 .laser-card-content {
-  background: rgba(8, 8, 18, 0.95);
+  background: rgba(8,8,22,0.96);
   width: 100%;
   height: 100%;
   border-radius: 5px;
-  padding: 20px;
+  padding: 18px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -162,145 +303,12 @@ html, body {
 }
 
 @keyframes rotateLaser {
-  100% {
-    transform: rotate(360deg);
-  }
+  100% { transform: rotate(360deg); }
 }
 
-/* Typography styles */
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-title), sans-serif;
-  color: var(--text-color);
-  letter-spacing: -0.02em;
-}
-
-.section-title {
-  margin-bottom: 30px;
-  position: relative;
-}
-
-.section-title h2 {
-  font-size: 2.2rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  display: inline-block;
-  background: linear-gradient(90deg, #ffffff 40%, var(--skin-color) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 25px var(--skin-glow);
-}
-
-.section-title h2::after {
-  content: '< MODULE />';
-  font-family: var(--font-mono), monospace;
-  font-size: 0.7rem;
-  font-weight: 500;
-  color: var(--skin-color);
-  position: absolute;
-  bottom: -18px;
-  left: 0;
-  letter-spacing: 2px;
-  opacity: 0.8;
-}
-
-/* Buttons */
-.btn {
-  background-color: transparent;
-  color: var(--skin-color);
-  border: 1px solid var(--skin-color);
-  padding: 12px 30px;
-  border-radius: 4px;
-  font-family: var(--font-mono), monospace;
-  font-weight: 600;
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  cursor: pointer;
-  box-shadow: 0 0 12px var(--skin-glow), inset 0 0 8px var(--skin-glow);
-  position: relative;
-  transition: all 0.3s ease;
-  overflow: hidden;
-}
-
-.btn:hover {
-  background-color: var(--skin-color);
-  color: var(--text-inverse);
-  box-shadow: 0 0 20px var(--skin-glow-strong);
-  transform: translateY(-2px);
-}
-
-/* Fixed HUD Overlays Layout */
-.hud-wrapper {
-  position: fixed;
-  top: 100px;
-  bottom: 40px;
-  left: 40px;
-  width: 540px;
-  z-index: 10;
-  pointer-events: none; /* Clicks pass through empty areas to WebGL */
-}
-
-.hud-panel {
-  width: 100%;
-  height: 100%;
-  background: rgba(3, 3, 10, 0.75);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  border: 1px solid var(--border-color);
-  border-radius: 6px;
-  padding: 35px;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.9), inset 0 0 15px rgba(6, 182, 212, 0.05);
-  pointer-events: auto; /* Re-enable clicks inside the card */
-  position: relative;
-}
-
-/* Right-aligned HUD wrapper option */
-.hud-wrapper-right {
-  left: auto;
-  right: 40px;
-}
-
-.hud-scrollable {
-  flex: 1;
-  overflow-y: auto;
-  padding-right: 15px;
-  margin-top: 15px;
-}
-
-@media (max-width: 991px) {
-  html, body {
-    overflow: auto; /* Enable scroll on mobile */
-    height: auto;
-  }
-  
-  .hud-wrapper, .hud-wrapper-right {
-    position: relative;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    height: auto;
-    padding: 20px;
-    margin-top: 20px;
-    pointer-events: auto;
-  }
-  
-  .hud-panel {
-    height: auto;
-    padding: 25px;
-  }
-  
-  .hud-scrollable {
-    height: auto;
-    overflow-y: visible;
-  }
-}
-
-/* 3D background container */
+/* =========================================
+   3D Canvas
+   ========================================= */
 .canvas-container {
   position: fixed;
   top: 0;
@@ -310,10 +318,22 @@ h1, h2, h3, h4, h5, h6 {
   z-index: 0;
 }
 
-/* Custom Cursor Glow */
+/* Subtle atmospheric vignette over the 3D scene */
+.canvas-container::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(2,2,8,0.65) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* =========================================
+   Custom Cursor Glow
+   ========================================= */
 .cursor-glow {
-  width: 450px;
-  height: 450px;
+  width: 400px;
+  height: 400px;
   background: radial-gradient(circle, var(--skin-glow) 0%, rgba(0,0,0,0) 70%);
   border-radius: 50%;
   position: fixed;
@@ -321,4 +341,53 @@ h1, h2, h3, h4, h5, h6 {
   transform: translate(-50%, -50%);
   z-index: 1;
   mix-blend-mode: screen;
+}
+
+/* =========================================
+   Mobile / Responsive Overrides
+   ========================================= */
+@media (max-width: 991px) {
+  html, body {
+    overflow: auto;
+    height: auto;
+  }
+
+  .main-wrapper {
+    position: relative;
+  }
+
+  .interactive-content {
+    position: relative;
+  }
+
+  .hud-wrapper,
+  .hud-wrapper-right {
+    position: relative;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: auto;
+    padding: 0 16px;
+    margin-top: 16px;
+    pointer-events: auto;
+  }
+
+  .hud-panel {
+    height: auto;
+    padding: 22px 20px;
+    border-left: 3px solid var(--skin-color);
+    border-right: 1px solid rgba(6,182,212,0.2);
+  }
+
+  .hud-wrapper-right .hud-panel {
+    border-left: 3px solid var(--skin-color);
+    border-right: 1px solid rgba(6,182,212,0.2);
+  }
+
+  .hud-scrollable {
+    height: auto;
+    overflow-y: visible;
+  }
 }
