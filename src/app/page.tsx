@@ -114,22 +114,22 @@ export default function Home() {
                 <Hero onNavigate={handleNavigate} skinColor={currentColor} />
               </div>
             </div>
-            <div id="about" className="hud-wrapper">
+            <div id="about" className="hud-wrapper hud-wrapper-right">
               <div className="hud-panel">
                 <About />
               </div>
             </div>
-            <div id="services" className="hud-wrapper-right hud-wrapper">
+            <div id="services" className="hud-wrapper">
               <div className="hud-panel">
                 <Services />
               </div>
             </div>
-            <div id="portfolio" className="hud-wrapper">
+            <div id="portfolio" className="hud-wrapper hud-wrapper-right">
               <div className="hud-panel">
                 <Portfolio />
               </div>
             </div>
-            <div id="contact" className="hud-wrapper-right hud-wrapper">
+            <div id="contact" className="hud-wrapper">
               <div className="hud-panel">
                 <Contact />
               </div>
@@ -156,11 +156,11 @@ export default function Home() {
             {activeSection === 'about' && (
               <motion.div
                 key="about"
-                initial={{ opacity: 0, x: -50 }}
+                initial={{ opacity: 0, x: 50 }}
                 animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -50 }}
+                exit={{ opacity: 0, x: 50 }}
                 transition={transitionConfig}
-                className="hud-wrapper"
+                className="hud-wrapper hud-wrapper-right"
               >
                 <div className="hud-panel">
                   <About />
@@ -171,11 +171,11 @@ export default function Home() {
             {activeSection === 'services' && (
               <motion.div
                 key="services"
-                initial={{ opacity: 0, x: 50 }}
+                initial={{ opacity: 0, x: -50 }}
                 animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 50 }}
+                exit={{ opacity: 0, x: -50 }}
                 transition={transitionConfig}
-                className="hud-wrapper hud-wrapper-right"
+                className="hud-wrapper"
               >
                 <div className="hud-panel">
                   <Services />
@@ -186,11 +186,11 @@ export default function Home() {
             {activeSection === 'portfolio' && (
               <motion.div
                 key="portfolio"
-                initial={{ opacity: 0, x: -50 }}
+                initial={{ opacity: 0, x: 50 }}
                 animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -50 }}
+                exit={{ opacity: 0, x: 50 }}
                 transition={transitionConfig}
-                className="hud-wrapper"
+                className="hud-wrapper hud-wrapper-right"
               >
                 <div className="hud-panel">
                   <Portfolio />
@@ -201,11 +201,11 @@ export default function Home() {
             {activeSection === 'contact' && (
               <motion.div
                 key="contact"
-                initial={{ opacity: 0, x: 50 }}
+                initial={{ opacity: 0, x: -50 }}
                 animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 50 }}
+                exit={{ opacity: 0, x: -50 }}
                 transition={transitionConfig}
-                className="hud-wrapper hud-wrapper-right"
+                className="hud-wrapper"
               >
                 <div className="hud-panel">
                   <Contact />
