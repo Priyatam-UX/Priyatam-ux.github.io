@@ -88,12 +88,12 @@ export default function Portfolio() {
   } as const;
 
   return (
-    <div style={{ width: '100%' }}>
-      <div className="container">
-        <div className="section-title">
-          <h2>Portfolio</h2>
-        </div>
+    <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}>
+      <div className="section-title">
+        <h2>Portfolio</h2>
+      </div>
 
+      <div className="hud-scrollable">
         <div className={styles.headingBlock}>
           <h3>My Last Projects :</h3>
         </div>

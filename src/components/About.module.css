@@ -59,13 +59,23 @@
   color: var(--text-muted);
   text-transform: uppercase;
   font-weight: 600;
-  letter-spacing: 0.5px;
+.infoContent span {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--text-muted);
 }
 
-.infoValue {
+.infoContent p {
   font-size: 0.95rem;
   font-weight: 600;
-  color: var(--text-color);
+}
+
+.skillsBlock h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 25px;
+  border-left: 3px solid var(--skin-color);
+  padding-left: 10px;
 }
 
 .skillsList {
@@ -138,8 +148,8 @@
 /* Timelines styling */
 .timelinesGrid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
+  grid-template-columns: 1fr;
+  gap: 35px;
 }
 
 .timelineMainTitle {

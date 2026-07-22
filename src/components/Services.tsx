@@ -57,12 +57,12 @@ export default function Services() {
   } as const;
 
   return (
-    <div style={{ width: '100%' }}>
-      <div className="container">
-        <div className="section-title">
-          <h2>Services</h2>
-        </div>
+    <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}>
+      <div className="section-title">
+        <h2>Services</h2>
+      </div>
 
+      <div className="hud-scrollable">
         <motion.div
           variants={containerVariants}
           initial="hidden"

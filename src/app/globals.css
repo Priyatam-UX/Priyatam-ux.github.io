@@ -9,15 +9,15 @@
 }
 
 :root {
-  /* Cyberpunk Dark Theme */
-  --bg-color: #020205;
-  --bg-secondary: #05050e;
-  --bg-card: rgba(5, 5, 15, 0.7);
-  --bg-navbar: rgba(2, 2, 5, 0.85);
+  /* Cyberpunk Universe Dark Theme */
+  --bg-color: #010103;
+  --bg-secondary: #04040a;
+  --bg-card: rgba(4, 4, 12, 0.7);
+  --bg-navbar: rgba(1, 1, 3, 0.85);
   
   --text-color: #e5e9f0;
   --text-muted: #6e7687;
-  --text-inverse: #020205;
+  --text-inverse: #010103;
   
   --border-color: rgba(6, 182, 212, 0.15); /* Neon cyan border */
   --border-glass: rgba(168, 85, 247, 0.2); /* Neon purple glass */
@@ -26,7 +26,7 @@
   --skin-glow: rgba(6, 182, 212, 0.2);
   --skin-glow-strong: rgba(6, 182, 212, 0.5);
   
-  --shadow-color: rgba(0, 0, 0, 0.85);
+  --shadow-color: rgba(0, 0, 0, 0.9);
   --transition-speed: 0.3s;
   
   /* Cyberpunk accents */
@@ -37,32 +37,14 @@
   --color-pink: #f43f5e;
 }
 
-[data-theme="light"] {
-  --bg-color: #0a0b16;
-  --bg-secondary: #121324;
-  --bg-card: rgba(18, 19, 36, 0.75);
-  --bg-navbar: rgba(10, 11, 22, 0.85);
-  --text-color: #ffffff;
-  --text-muted: #838ca3;
-  --border-color: rgba(168, 85, 247, 0.3);
-  --border-glass: rgba(6, 182, 212, 0.3);
-  --skin-glow: rgba(168, 85, 247, 0.2);
-  --skin-glow-strong: rgba(168, 85, 247, 0.5);
-}
-
-html {
-  scroll-behavior: smooth;
-  font-size: 16px;
-  overflow-x: hidden;
-  background-color: var(--bg-color);
-}
-
-body {
-  font-family: var(--font-inter), sans-serif;
+html, body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden; /* Lock viewport scrolling on desktop */
   background-color: var(--bg-color);
   color: var(--text-color);
+  font-family: var(--font-inter), sans-serif;
   line-height: 1.6;
-  overflow-x: hidden;
 }
 
 .mono {
@@ -71,8 +53,8 @@ body {
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track {
@@ -86,10 +68,9 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--skin-color);
-  box-shadow: 0 0 10px var(--skin-color);
 }
 
-/* Scanlines Screen Effect overlay */
+/* Scanlines overlay */
 .scanlines::before {
   content: " ";
   display: block;
@@ -98,18 +79,18 @@ body {
   left: 0;
   bottom: 0;
   right: 0;
-  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.05), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.05));
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.04));
   z-index: 9999;
   background-size: 100% 4px, 3px 100%;
   pointer-events: none;
-  opacity: 0.4;
+  opacity: 0.35;
 }
 
 /* Cyber Card base styling */
 .cyber-card {
   background: var(--bg-card);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
   border: 1px solid var(--border-color);
   border-radius: 4px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.6), inset 0 0 12px rgba(6, 182, 212, 0.03);
@@ -129,13 +110,13 @@ body {
   z-index: 5;
 }
 
-/* Premium Rotating Laser border card decoration */
+/* Laser border card */
 .laser-card {
   position: relative;
   border-radius: 6px;
   overflow: hidden;
   background: rgba(5, 5, 12, 0.4);
-  padding: 1px; /* Creates room for the laser border path */
+  padding: 1px;
   z-index: 1;
   transition: all var(--transition-speed) ease;
 }
@@ -160,8 +141,8 @@ body {
 }
 
 .laser-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 30px var(--skin-glow);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px var(--skin-glow);
 }
 
 .laser-card:hover::after {
@@ -169,11 +150,11 @@ body {
 }
 
 .laser-card-content {
-  background: rgba(10, 10, 22, 0.9);
+  background: rgba(8, 8, 18, 0.95);
   width: 100%;
   height: 100%;
   border-radius: 5px;
-  padding: 24px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -194,36 +175,33 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .section-title {
-  margin-bottom: 60px;
-  text-align: center;
+  margin-bottom: 30px;
   position: relative;
 }
 
 .section-title h2 {
-  font-size: 3rem;
+  font-size: 2.2rem;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 4px;
+  letter-spacing: 3px;
   display: inline-block;
   background: linear-gradient(90deg, #ffffff 40%, var(--skin-color) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 30px var(--skin-glow);
+  text-shadow: 0 0 25px var(--skin-glow);
 }
 
 .section-title h2::after {
-  content: '< SECTION />';
+  content: '< MODULE />';
   font-family: var(--font-mono), monospace;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   font-weight: 500;
   color: var(--skin-color);
   position: absolute;
-  bottom: -22px;
-  left: 50%;
-  transform: translateX(-50%);
+  bottom: -18px;
+  left: 0;
   letter-spacing: 2px;
   opacity: 0.8;
-  text-shadow: 0 0 5px var(--skin-color);
 }
 
 /* Buttons */
@@ -231,15 +209,15 @@ h1, h2, h3, h4, h5, h6 {
   background-color: transparent;
   color: var(--skin-color);
   border: 1px solid var(--skin-color);
-  padding: 14px 38px;
+  padding: 12px 30px;
   border-radius: 4px;
   font-family: var(--font-mono), monospace;
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 2px;
   cursor: pointer;
-  box-shadow: 0 0 15px var(--skin-glow), inset 0 0 10px var(--skin-glow);
+  box-shadow: 0 0 12px var(--skin-glow), inset 0 0 8px var(--skin-glow);
   position: relative;
   transition: all 0.3s ease;
   overflow: hidden;
@@ -248,61 +226,77 @@ h1, h2, h3, h4, h5, h6 {
 .btn:hover {
   background-color: var(--skin-color);
   color: var(--text-inverse);
-  box-shadow: 0 0 25px var(--skin-glow-strong);
+  box-shadow: 0 0 20px var(--skin-glow-strong);
   transform: translateY(-2px);
 }
 
-.btn:active {
-  transform: translateY(0);
-}
-
-/* Stacking section scroll framework with 3D perspective viewport */
-.stack-container {
-  width: 100%;
-  position: relative;
-  perspective: 1800px;
-  transform-style: preserve-3d;
-}
-
-.stack-section {
-  position: sticky;
-  top: 80px;
-  height: calc(100vh - 80px);
-  background-color: var(--bg-color);
-  border-top: 1px solid rgba(255, 255, 255, 0.02);
-  box-shadow: 0 -25px 50px rgba(0, 0, 0, 0.9);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  overflow: hidden;
+/* Fixed HUD Overlays Layout */
+.hud-wrapper {
+  position: fixed;
+  top: 100px;
+  bottom: 40px;
+  left: 40px;
+  width: 540px;
   z-index: 10;
-  transform-origin: top center;
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+  pointer-events: none; /* Clicks pass through empty areas to WebGL */
 }
 
-.content-inner {
+.hud-panel {
   width: 100%;
-  max-width: 1300px;
-  margin: 0 auto;
-  padding: 40px;
   height: 100%;
+  background: rgba(3, 3, 10, 0.75);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 35px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.9), inset 0 0 15px rgba(6, 182, 212, 0.05);
+  pointer-events: auto; /* Re-enable clicks inside the card */
+  position: relative;
+}
+
+/* Right-aligned HUD wrapper option */
+.hud-wrapper-right {
+  left: auto;
+  right: 40px;
+}
+
+.hud-scrollable {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 15px;
+  margin-top: 15px;
 }
 
 @media (max-width: 991px) {
-  .stack-section {
-    position: relative;
-    top: 0;
+  html, body {
+    overflow: auto; /* Enable scroll on mobile */
     height: auto;
-    min-height: 100vh;
-    padding: 80px 0;
   }
   
-  .content-inner {
-    padding: 20px;
+  .hud-wrapper, .hud-wrapper-right {
+    position: relative;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
     height: auto;
+    padding: 20px;
+    margin-top: 20px;
+    pointer-events: auto;
+  }
+  
+  .hud-panel {
+    height: auto;
+    padding: 25px;
+  }
+  
+  .hud-scrollable {
+    height: auto;
+    overflow-y: visible;
   }
 }
 
@@ -314,12 +308,6 @@ h1, h2, h3, h4, h5, h6 {
   width: 100vw;
   height: 100vh;
   z-index: 0;
-  pointer-events: none;
-}
-
-.interactive-content {
-  position: relative;
-  z-index: 2;
 }
 
 /* Custom Cursor Glow */
