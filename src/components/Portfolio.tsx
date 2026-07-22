@@ -107,43 +107,45 @@ export default function Portfolio() {
         >
           {projects.map((project, index) => (
             <motion.div key={index} variants={itemVariants}>
-              <TiltCard className={styles.projectCard}>
-                <div className={styles.imgWrapper}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className={styles.projectImg}
-                  />
-                  <div className={styles.overlay}>
-                    <div className={styles.overlayContent}>
-                      <h4 className={styles.projTitle}>{project.title}</h4>
-                      <p className={styles.projDesc}>{project.description}</p>
-                      
-                      <div className={styles.tags}>
-                        {project.tags.map((tag, tIdx) => (
-                          <span key={tIdx} className={styles.tagPill}>
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
+              <div className="laser-card" style={{ height: '100%' }}>
+                <TiltCard className={`${styles.projectCard} laser-card-content`}>
+                  <div className={styles.imgWrapper}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className={styles.projectImg}
+                    />
+                    <div className={styles.overlay}>
+                      <div className={styles.overlayContent}>
+                        <h4 className={styles.projTitle}>{project.title}</h4>
+                        <p className={styles.projDesc}>{project.description}</p>
+                        
+                        <div className={styles.tags}>
+                          {project.tags.map((tag, tIdx) => (
+                            <span key={tIdx} className={styles.tagPill}>
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
 
-                      <div className={styles.links}>
-                        <a
-                          href={project.github}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className={styles.linkIcon}
-                          aria-label={`View code for ${project.title}`}
-                        >
-                          <GithubIcon size={20} />
-                          <span>Code</span>
-                        </a>
+                        <div className={styles.links}>
+                          <a
+                            href={project.github}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={styles.linkIcon}
+                            aria-label={`View code for ${project.title}`}
+                          >
+                            <GithubIcon size={20} />
+                            <span>Code</span>
+                          </a>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </TiltCard>
+                </TiltCard>
+              </div>
             </motion.div>
           ))}
         </motion.div>

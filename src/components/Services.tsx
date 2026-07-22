@@ -74,13 +74,15 @@ export default function Services() {
             const Icon = service.icon;
             return (
               <motion.div key={index} variants={itemVariants}>
-                <TiltCard className={styles.serviceCard}>
-                  <div className={styles.iconContainer}>
-                    <Icon className={styles.icon} />
-                  </div>
-                  <h4 className={styles.cardTitle}>{service.title}</h4>
-                  <p className={styles.cardDesc}>{service.desc}</p>
-                </TiltCard>
+                <div className="laser-card">
+                  <TiltCard className={`${styles.serviceCard} laser-card-content`}>
+                    <div className={styles.iconContainer}>
+                      <Icon className={styles.icon} />
+                    </div>
+                    <h4 className={styles.cardTitle}>{service.title}</h4>
+                    <p className={styles.cardDesc}>{service.desc}</p>
+                  </TiltCard>
+                </div>
               </motion.div>
             );
           })}

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, Download, ChevronsDown } from 'lucide-react';
 import Terminal from './Terminal';
+import Magnetic from './Magnetic';
 import styles from './Hero.module.css';
 
 interface HeroProps {
@@ -102,26 +103,30 @@ export default function Hero({ onNavigate, skinColor }: HeroProps) {
             </motion.p>
             
             <motion.div variants={itemVariants} className={styles.buttons}>
-              <a
-                href="#contact"
-                onClick={(e) => {
-                  e.preventDefault();
-                  onNavigate('contact');
-                }}
-                className="btn"
-                style={{ display: 'inline-flex', alignItems: 'center', gap: 10 }}
-              >
-                Hire Me <ArrowRight size={18} />
-              </a>
-              <a
-                href="https://drive.google.com/file/d/1NHG5iGIcBxhZsjK3E01aDchSZ5XTcXy-/view?usp=sharing"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.btnSecondary}
-                style={{ display: 'inline-flex', alignItems: 'center', gap: 10 }}
-              >
-                Download CV <Download size={18} />
-              </a>
+              <Magnetic>
+                <a
+                  href="#contact"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onNavigate('contact');
+                  }}
+                  className="btn"
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: 10 }}
+                >
+                  Hire Me <ArrowRight size={18} />
+                </a>
+              </Magnetic>
+              <Magnetic>
+                <a
+                  href="https://drive.google.com/file/d/1NHG5iGIcBxhZsjK3E01aDchSZ5XTcXy-/view?usp=sharing"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.btnSecondary}
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: 10 }}
+                >
+                  Download CV <Download size={18} />
+                </a>
+              </Magnetic>
             </motion.div>
           </div>
           

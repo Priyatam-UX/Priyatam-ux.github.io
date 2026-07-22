@@ -13,38 +13,35 @@ function ConstellationNet({ color }: SceneProps) {
   const pointsRef = useRef<THREE.Points>(null);
   const linesRef = useRef<THREE.LineSegments>(null);
   
-  const count = 90; // Number of floating nodes
-  const maxDistance = 2.4; // Max distance to draw links
+  const count = 120; // Rebuilt with more star nodes for a volumetric layout
+  const maxDistance = 2.6; // Max linking distance
 
-  // Generate random starting coordinates and velocities
+  // Generate wider dispersed points
   const [particles, velocities] = useMemo(() => {
     const pos = new Float32Array(count * 3);
     const vel = new Float32Array(count * 3);
     for (let i = 0; i < count * 3; i += 3) {
-      // Distributed in 3D box
-      pos[i] = (Math.random() - 0.5) * 16;     // X [-8, 8]
-      pos[i + 1] = (Math.random() - 0.5) * 10; // Y [-5, 5]
-      pos[i + 2] = (Math.random() - 0.5) * 5;  // Z [-2.5, 2.5]
+      pos[i] = (Math.random() - 0.5) * 22;     // X [-11, 11]
+      pos[i + 1] = (Math.random() - 0.5) * 16; // Y [-8, 8]
+      pos[i + 2] = (Math.random() - 0.5) * 6;  // Z [-3, 3]
 
-      // Very slow drift speed
-      vel[i] = (Math.random() - 0.5) * 0.015;
-      vel[i + 1] = (Math.random() - 0.5) * 0.015;
+      vel[i] = (Math.random() - 0.5) * 0.016;
+      vel[i + 1] = (Math.random() - 0.5) * 0.016;
       vel[i + 2] = (Math.random() - 0.5) * 0.01;
     }
     return [pos, vel];
   }, []);
 
-  // Pre-allocate a large line segments buffer
-  const linePositions = useMemo(() => new Float32Array(count * 18 * 2 * 3), []);
+  const linePositions = useMemo(() => new Float32Array(count * 20 * 2 * 3), []);
 
   useFrame((state) => {
     if (!pointsRef.current || !linesRef.current) return;
 
     const pointer = state.pointer; // Mouse pointer [-1, 1]
     
-    // Scale pointer to 3D dimensions
-    const mouseX = pointer.x * 8;
-    const mouseY = pointer.y * 5;
+    // Scale pointer to 3D world coordinates
+    const mouseX = pointer.x * 9;
+    const mouseY = pointer.y * 6;
     const mouseZ = 0;
 
     const ptsGeom = pointsRef.current.geometry;
@@ -55,24 +52,24 @@ function ConstellationNet({ color }: SceneProps) {
 
     let lineIndex = 0;
 
-    // 1. Move particles
+    // 1. Move nodes
     for (let i = 0; i < count * 3; i += 3) {
       ptsArr[i] += velocities[i];
       ptsArr[i + 1] += velocities[i + 1];
       ptsArr[i + 2] += velocities[i + 2];
 
-      // Box boundaries bounce check
-      if (Math.abs(ptsArr[i]) > 10) velocities[i] *= -1;
-      if (Math.abs(ptsArr[i + 1]) > 6) velocities[i + 1] *= -1;
-      if (Math.abs(ptsArr[i + 2]) > 4) velocities[i + 2] *= -1;
+      // Bounce check
+      if (Math.abs(ptsArr[i]) > 12) velocities[i] *= -1;
+      if (Math.abs(ptsArr[i + 1]) > 9) velocities[i + 1] *= -1;
+      if (Math.abs(ptsArr[i + 2]) > 5) velocities[i + 2] *= -1;
 
-      // Mouse magnet: pull nodes slightly if close to mouse coordinates
+      // Mouse pull
       const dx = mouseX - ptsArr[i];
       const dy = mouseY - ptsArr[i + 1];
       const distToMouse = Math.sqrt(dx * dx + dy * dy);
-      if (distToMouse < 2.5) {
-        ptsArr[i] += dx * 0.006;
-        ptsArr[i + 1] += dy * 0.006;
+      if (distToMouse < 3.0) {
+        ptsArr[i] += dx * 0.007;
+        ptsArr[i + 1] += dy * 0.007;
       }
     }
     ptsGeom.attributes.position.needsUpdate = true;
@@ -83,7 +80,6 @@ function ConstellationNet({ color }: SceneProps) {
       const iy = ptsArr[i * 3 + 1];
       const iz = ptsArr[i * 3 + 2];
 
-      // Check distance to other nodes
       for (let j = i + 1; j < count; j++) {
         const jx = ptsArr[j * 3];
         const jy = ptsArr[j * 3 + 1];
@@ -104,9 +100,9 @@ function ConstellationNet({ color }: SceneProps) {
         }
       }
 
-      // Check distance to mouse pointer and connect
+      // Connect to mouse
       const distToMouse = Math.sqrt((ix - mouseX) ** 2 + (iy - mouseY) ** 2 + (iz - mouseZ) ** 2);
-      if (distToMouse < 3.2 && lineIndex < linePositions.length - 6) {
+      if (distToMouse < 3.5 && lineIndex < linePositions.length - 6) {
         linesArr[lineIndex] = ix;
         linesArr[lineIndex + 1] = iy;
         linesArr[lineIndex + 2] = iz;
@@ -119,7 +115,6 @@ function ConstellationNet({ color }: SceneProps) {
       }
     }
 
-    // Set remaining buffer values to 0
     for (let k = lineIndex; k < linesArr.length; k++) {
       linesArr[k] = 0;
     }
@@ -129,22 +124,20 @@ function ConstellationNet({ color }: SceneProps) {
 
   return (
     <group>
-      {/* Node points */}
       <points ref={pointsRef}>
         <bufferGeometry>
           <bufferAttribute attach="attributes-position" args={[particles, 3]} />
         </bufferGeometry>
         <pointsMaterial
-          size={0.11}
+          size={0.12}
           color={color}
           transparent
-          opacity={0.7}
+          opacity={0.65}
           sizeAttenuation
           depthWrite={false}
         />
       </points>
 
-      {/* Network web lines */}
       <lineSegments ref={linesRef}>
         <bufferGeometry>
           <bufferAttribute attach="attributes-position" args={[linePositions, 3]} />
@@ -152,7 +145,7 @@ function ConstellationNet({ color }: SceneProps) {
         <lineBasicMaterial
           color={color}
           transparent
-          opacity={0.15}
+          opacity={0.14}
           depthWrite={false}
         />
       </lineSegments>
@@ -163,28 +156,17 @@ function ConstellationNet({ color }: SceneProps) {
 function FloatingShape({ color }: SceneProps) {
   const meshRef = useRef<THREE.Mesh>(null);
   const { width } = useThree().viewport;
-  const [scrollOffset, setScrollOffset] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPercent = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
-      setScrollOffset(scrollPercent || 0);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const isMobile = width < 8;
-  // Position shape slightly more to the right, floating off center
   const position: [number, number, number] = isMobile ? [0, -1.8, 0] : [2.6, 0.2, 0];
-  const scale = isMobile ? 0.9 : 1.3;
+  const scale = isMobile ? 0.95 : 1.35;
 
   useFrame((state) => {
     if (meshRef.current) {
       const time = state.clock.getElapsedTime();
       
-      meshRef.current.rotation.x = Math.sin(time / 4) * 0.15 + scrollOffset * 2.0;
-      meshRef.current.rotation.y = time / 5 + scrollOffset * 1.5;
+      meshRef.current.rotation.x = Math.sin(time / 4) * 0.15;
+      meshRef.current.rotation.y = time / 5;
       meshRef.current.rotation.z = Math.cos(time / 4) * 0.15;
 
       const pointer = state.pointer;
@@ -199,8 +181,8 @@ function FloatingShape({ color }: SceneProps) {
         <icosahedronGeometry args={[1, 1]} />
         <MeshDistortMaterial
           color={color}
-          roughness={0.15}
-          metalness={0.6}
+          roughness={0.12}
+          metalness={0.65}
           distort={0.4}
           speed={2.8}
           clearcoat={1}
@@ -211,6 +193,48 @@ function FloatingShape({ color }: SceneProps) {
   );
 }
 
+// Rebuilt camera flight controller to pan/zoom through star coordinates dynamically on scroll
+function CameraFlight() {
+  const { camera } = useThree();
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (totalHeight > 0) {
+        setScrollProgress(window.scrollY / totalHeight);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useFrame(() => {
+    // Generate complex flight path:
+    // - Camera dips down in Y
+    // - Camera arches to the side in X
+    // - Camera zooms slightly in/out in Z
+    const targetX = Math.sin(scrollProgress * Math.PI) * 4.0;
+    const targetY = -scrollProgress * 9.0;
+    const targetZ = 8.0 - Math.sin(scrollProgress * Math.PI) * 2.5;
+
+    const targetRotX = scrollProgress * 0.35;
+    const targetRotY = scrollProgress * 0.45;
+    const targetRotZ = Math.sin(scrollProgress * Math.PI * 2) * 0.1;
+
+    // Smooth lerping with camera damping coordinates
+    camera.position.x = THREE.MathUtils.lerp(camera.position.x, targetX, 0.04);
+    camera.position.y = THREE.MathUtils.lerp(camera.position.y, targetY, 0.04);
+    camera.position.z = THREE.MathUtils.lerp(camera.position.z, targetZ, 0.04);
+
+    camera.rotation.x = THREE.MathUtils.lerp(camera.rotation.x, targetRotX, 0.04);
+    camera.rotation.y = THREE.MathUtils.lerp(camera.rotation.y, targetRotY, 0.04);
+    camera.rotation.z = THREE.MathUtils.lerp(camera.rotation.z, targetRotZ, 0.04);
+  });
+
+  return null;
+}
+
 export default function Canvas3D({ color }: SceneProps) {
   return (
     <div className="canvas-container">
@@ -218,6 +242,8 @@ export default function Canvas3D({ color }: SceneProps) {
         <ambientLight intensity={0.5} />
         <directionalLight position={[10, 10, 10]} intensity={1.5} />
         <pointLight position={[-10, -10, -10]} intensity={1.2} color={color} />
+        {/* Scrollflight controller */}
+        <CameraFlight />
         {/* Floating Constellation Net */}
         <ConstellationNet color={color} />
         {/* Floating Glass Geometry */}

@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import dynamic from 'next/dynamic';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import Navbar from '@/components/Navbar';
 import ThemeToggle from '@/components/ThemeToggle';
 import CursorGlow from '@/components/CursorGlow';
@@ -14,9 +15,39 @@ import Contact from '@/components/Contact';
 // Dynamically import the 3D Canvas with SSR disabled to prevent Node compile errors
 const Canvas3D = dynamic(() => import('@/components/Canvas3D'), { ssr: false });
 
+interface StackSectionProps {
+  id: string;
+  children: React.ReactNode;
+}
+
+// Ultra-premium 3D perspective scroll stacking section wrapper
+function StackSection({ id, children }: StackSectionProps) {
+  const targetRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: targetRef,
+    offset: ['start start', 'end start'],
+  });
+
+  // Shrinks card, tilts it in 3D, and fades it as the next section slides over it
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.92]);
+  const rotateX = useTransform(scrollYProgress, [0, 1], [0, 12]);
+  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0.4]);
+
+  return (
+    <motion.section
+      ref={targetRef}
+      id={id}
+      style={{ scale, rotateX, opacity }}
+      className="stack-section"
+    >
+      <div className="content-inner">{children}</div>
+    </motion.section>
+  );
+}
+
 export default function Home() {
   const [activeSection, setActiveSection] = useState('home');
-  const [currentColor, setCurrentColor] = useState('#06b6d4'); // Default skin color (cyan)
+  const [currentColor, setCurrentColor] = useState('#06b6d4'); // Default: Neon Cyan
 
   // Track active section during scroll using IntersectionObserver
   useEffect(() => {
@@ -24,7 +55,7 @@ export default function Home() {
     
     const observerOptions = {
       root: null,
-      rootMargin: '-30% 0px -60% 0px', // Activates when section is centered in viewport
+      rootMargin: '-30% 0px -60% 0px',
       threshold: 0.05,
     };
 
@@ -63,10 +94,10 @@ export default function Home() {
 
   return (
     <main className="main-wrapper">
-      {/* Dynamic 3D WebGL Constellation Background */}
+      {/* Scroll-flight 3D Constellation background */}
       <Canvas3D color={currentColor} />
 
-      {/* Trailing cursor spotlight */}
+      {/* Trailing snapping cursor glow */}
       <CursorGlow />
 
       {/* Floating Theme Controller */}
@@ -75,37 +106,27 @@ export default function Home() {
       {/* Floating Top Navigation */}
       <Navbar activeSection={activeSection} setActiveSection={handleNavigate} />
 
-      {/* Page Sections Stacking Content Wrapper */}
+      {/* Page Sections 3D Stacking Wrapper */}
       <div className="stack-container interactive-content">
-        <section className="stack-section" id="home">
-          <div className="content-inner">
-            <Hero onNavigate={handleNavigate} skinColor={currentColor} />
-          </div>
-        </section>
+        <StackSection id="home">
+          <Hero onNavigate={handleNavigate} skinColor={currentColor} />
+        </StackSection>
 
-        <section className="stack-section" id="about">
-          <div className="content-inner">
-            <About />
-          </div>
-        </section>
+        <StackSection id="about">
+          <About />
+        </StackSection>
 
-        <section className="stack-section" id="services">
-          <div className="content-inner">
-            <Services />
-          </div>
-        </section>
+        <StackSection id="services">
+          <Services />
+        </StackSection>
 
-        <section className="stack-section" id="portfolio">
-          <div className="content-inner">
-            <Portfolio />
-          </div>
-        </section>
+        <StackSection id="portfolio">
+          <Portfolio />
+        </StackSection>
 
-        <section className="stack-section" id="contact">
-          <div className="content-inner">
-            <Contact />
-          </div>
-        </section>
+        <StackSection id="contact">
+          <Contact />
+        </StackSection>
       </div>
     </main>
   );

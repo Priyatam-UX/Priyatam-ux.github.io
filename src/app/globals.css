@@ -10,14 +10,14 @@
 
 :root {
   /* Cyberpunk Dark Theme */
-  --bg-color: #030308;
-  --bg-secondary: #070714;
-  --bg-card: rgba(7, 7, 20, 0.6);
-  --bg-navbar: rgba(3, 3, 8, 0.85);
+  --bg-color: #020205;
+  --bg-secondary: #05050e;
+  --bg-card: rgba(5, 5, 15, 0.7);
+  --bg-navbar: rgba(2, 2, 5, 0.85);
   
   --text-color: #e5e9f0;
   --text-muted: #6e7687;
-  --text-inverse: #030308;
+  --text-inverse: #020205;
   
   --border-color: rgba(6, 182, 212, 0.15); /* Neon cyan border */
   --border-glass: rgba(168, 85, 247, 0.2); /* Neon purple glass */
@@ -26,7 +26,7 @@
   --skin-glow: rgba(6, 182, 212, 0.2);
   --skin-glow-strong: rgba(6, 182, 212, 0.5);
   
-  --shadow-color: rgba(0, 0, 0, 0.8);
+  --shadow-color: rgba(0, 0, 0, 0.85);
   --transition-speed: 0.3s;
   
   /* Cyberpunk accents */
@@ -38,10 +38,9 @@
 }
 
 [data-theme="light"] {
-  /* Let's keep a dark-mode dominant system but support a slightly brighter neon theme if toggled */
   --bg-color: #0a0b16;
   --bg-secondary: #121324;
-  --bg-card: rgba(18, 19, 36, 0.7);
+  --bg-card: rgba(18, 19, 36, 0.75);
   --bg-navbar: rgba(10, 11, 22, 0.85);
   --text-color: #ffffff;
   --text-muted: #838ca3;
@@ -66,7 +65,6 @@ body {
   overflow-x: hidden;
 }
 
-/* Monospace font settings */
 .mono {
   font-family: var(--font-mono), monospace;
 }
@@ -100,11 +98,11 @@ body {
   left: 0;
   bottom: 0;
   right: 0;
-  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.05), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.05));
   z-index: 9999;
   background-size: 100% 4px, 3px 100%;
   pointer-events: none;
-  opacity: 0.45;
+  opacity: 0.4;
 }
 
 /* Cyber Card base styling */
@@ -131,6 +129,63 @@ body {
   z-index: 5;
 }
 
+/* Premium Rotating Laser border card decoration */
+.laser-card {
+  position: relative;
+  border-radius: 6px;
+  overflow: hidden;
+  background: rgba(5, 5, 12, 0.4);
+  padding: 1px; /* Creates room for the laser border path */
+  z-index: 1;
+  transition: all var(--transition-speed) ease;
+}
+
+.laser-card::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    transparent,
+    var(--skin-color),
+    transparent 25%
+  );
+  animation: rotateLaser 4s linear infinite;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.laser-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px var(--skin-glow);
+}
+
+.laser-card:hover::after {
+  opacity: 1;
+}
+
+.laser-card-content {
+  background: rgba(10, 10, 22, 0.9);
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+
+@keyframes rotateLaser {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 /* Typography styles */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-title), sans-serif;
@@ -146,7 +201,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .section-title h2 {
   font-size: 3rem;
-  font-weight: 900;
+  font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 4px;
   display: inline-block;
@@ -201,10 +256,12 @@ h1, h2, h3, h4, h5, h6 {
   transform: translateY(0);
 }
 
-/* Stacking section scroll framework */
+/* Stacking section scroll framework with 3D perspective viewport */
 .stack-container {
   width: 100%;
   position: relative;
+  perspective: 1800px;
+  transform-style: preserve-3d;
 }
 
 .stack-section {
@@ -212,13 +269,15 @@ h1, h2, h3, h4, h5, h6 {
   top: 80px;
   height: calc(100vh - 80px);
   background-color: var(--bg-color);
-  border-top: 1px solid rgba(255, 255, 255, 0.03);
-  box-shadow: 0 -20px 40px rgba(0, 0, 0, 0.8);
+  border-top: 1px solid rgba(255, 255, 255, 0.02);
+  box-shadow: 0 -25px 50px rgba(0, 0, 0, 0.9);
   display: flex;
   flex-direction: column;
   justify-content: center;
   overflow: hidden;
   z-index: 10;
+  transform-origin: top center;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
 }
 
 .content-inner {
