@@ -306,6 +306,15 @@ h1, h2, h3, h4, h5, h6 {
   100% { transform: rotate(360deg); }
 }
 
+/* Glass utility class */
+.glass {
+  background: rgba(8, 8, 22, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(6, 182, 212, 0.15);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
 /* =========================================
    3D Canvas
    ========================================= */

@@ -174,7 +174,14 @@ export default function About() {
               <h3 className={styles.timelineMainTitle}>Work Experience</h3>
               <div className={styles.timelineTrack}>
                 {experience.map((exp, index) => (
-                  <div key={index} className={styles.timelineItem}>
+                  <motion.div 
+                    key={index} 
+                    className={styles.timelineItem}
+                    initial={{ opacity: 0, x: -30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, margin: "-50px" }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                  >
                     <div className={styles.timelineDot} />
                     <TiltCard className={styles.timelineCard}>
                       <span className={styles.timelineDate}>{exp.date}</span>
@@ -182,7 +189,7 @@ export default function About() {
                       <h5 className={styles.timelineSubtitle}>{exp.company}</h5>
                       <p className={styles.timelineText}>{exp.desc}</p>
                     </TiltCard>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </motion.div>
@@ -192,7 +199,14 @@ export default function About() {
               <h3 className={styles.timelineMainTitle}>Education</h3>
               <div className={styles.timelineTrack}>
                 {education.map((edu, index) => (
-                  <div key={index} className={styles.timelineItem}>
+                  <motion.div 
+                    key={index} 
+                    className={styles.timelineItem}
+                    initial={{ opacity: 0, x: -30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, margin: "-50px" }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                  >
                     <div className={styles.timelineDot} />
                     <TiltCard className={styles.timelineCard}>
                       <span className={styles.timelineDate}>{edu.date}</span>
@@ -201,7 +215,7 @@ export default function About() {
                       <span className={styles.timelineScore}>{edu.score}</span>
                       <p className={styles.timelineText}>{edu.desc}</p>
                     </TiltCard>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </motion.div>

@@ -59,6 +59,8 @@
   color: var(--text-muted);
   text-transform: uppercase;
   font-weight: 600;
+}
+
 .infoContent span {
   display: block;
   font-size: 0.8rem;
