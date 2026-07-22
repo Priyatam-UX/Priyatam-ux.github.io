@@ -3,8 +3,10 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Download } from 'lucide-react';
+import dynamic from 'next/dynamic';
 import Terminal from './Terminal';
 import Magnetic from './Magnetic';
+import ProfileCard3D from './ProfileCard3D';
 import styles from './Hero.module.css';
 
 interface HeroProps {
@@ -53,19 +55,16 @@ export default function Hero({ onNavigate, skinColor }: HeroProps) {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.4,
-      },
+      transition: { staggerChildren: 0.18, delayChildren: 0.3 },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 40 },
+    hidden: { opacity: 0, y: 32 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { type: 'spring', damping: 25, stiffness: 100 },
+      transition: { type: 'spring', damping: 22, stiffness: 110 },
     },
   } as const;
 
@@ -78,30 +77,28 @@ export default function Hero({ onNavigate, skinColor }: HeroProps) {
           animate="visible"
           className={styles.heroGrid}
         >
+          {/* ── TOP: text content ─────────────────────── */}
           <div className={styles.heroContent}>
             <motion.h3 variants={itemVariants} className={styles.hello}>
               Hello, I'm <span className={styles.name}>Priyatam</span>
             </motion.h3>
-            
+
             <motion.h1 variants={itemVariants} className={styles.profession}>
               And I'm a{' '}
               <span className={styles.typedText}>{currentText}</span>
               <span className={styles.cursor}>|</span>
             </motion.h1>
-            
+
             <motion.p variants={itemVariants} className={styles.description}>
-              I'm a Software Engineer specializing in designing, testing, and developing modern full-stack web architectures and automated workflow integrations.
-              Highly skilled in creating high-performance systems and interactive user experiences.
+              Software Engineer specializing in full-stack web architectures, automated
+              workflow integrations &amp; high-performance interactive experiences.
             </motion.p>
-            
+
             <motion.div variants={itemVariants} className={styles.buttons}>
               <Magnetic>
                 <a
                   href="#contact"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    onNavigate('contact');
-                  }}
+                  onClick={(e) => { e.preventDefault(); onNavigate('contact'); }}
                   className="btn"
                   style={{ display: 'inline-flex', alignItems: 'center', gap: 10 }}
                 >
@@ -121,11 +118,19 @@ export default function Hero({ onNavigate, skinColor }: HeroProps) {
               </Magnetic>
             </motion.div>
           </div>
-          
-          {/* Cyber Interactive CLI Console Terminal */}
-          <div className={styles.heroVisual}>
+
+          {/* ── MIDDLE: 3D Profile Card ────────────────── */}
+          <motion.div
+            variants={itemVariants}
+            className={styles.profileCardWrapper}
+          >
+            <ProfileCard3D />
+          </motion.div>
+
+          {/* ── BOTTOM: Interactive Terminal ───────────── */}
+          <motion.div variants={itemVariants} className={styles.heroVisual}>
             <Terminal skinColor={skinColor} />
-          </div>
+          </motion.div>
         </motion.div>
       </div>
     </div>
