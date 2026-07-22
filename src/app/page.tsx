@@ -19,6 +19,11 @@ export default function Home() {
   const [activeSection, setActiveSection] = useState('home');
   const [currentColor, setCurrentColor] = useState('#06b6d4'); // Default skin color (cyan)
   const [isMobile, setIsMobile] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Monitor screen width to toggle between full-screen 3D HUD & responsive scroll stack
   useEffect(() => {
@@ -52,6 +57,17 @@ export default function Home() {
 
   // Stagger configurations for desktop HUD transition fades
   const transitionConfig = { duration: 0.4, ease: 'easeOut' } as const;
+
+  if (!mounted) {
+    return (
+      <main className="main-wrapper">
+        <Canvas3D color={currentColor} activeSection={activeSection} />
+        <CursorGlow />
+        <ThemeToggle currentColor={currentColor} setCurrentColor={setCurrentColor} />
+        <Navbar activeSection={activeSection} setActiveSection={handleNavigate} />
+      </main>
+    );
+  }
 
   return (
     <main className="main-wrapper">

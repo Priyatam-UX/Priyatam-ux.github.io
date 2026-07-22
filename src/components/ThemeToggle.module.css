@@ -1,6 +1,6 @@
 .switcherContainer {
   position: fixed;
-  top: 30px;
+  bottom: 30px;
   right: 30px;
   z-index: 1000;
   display: flex;
@@ -46,9 +46,9 @@
   flex-direction: column;
   gap: 15px;
   position: absolute;
-  top: 55px;
+  bottom: 55px;
   right: 0;
-  transform-origin: top right;
+  transform-origin: bottom right;
 }
 
 .themeSection {

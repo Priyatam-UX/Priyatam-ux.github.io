@@ -268,29 +268,29 @@ function CameraManager({ activeSection }: { activeSection: string }) {
     // Determine target coordinates based on active section
     switch (activeSection) {
       case 'home':
-        // Frame Hero Planet on the right, leave left for HUD console
-        targetPos.set(3.2, 0.4, 6);
-        targetLookAt.set(0, 0, 0);
+        // HUD is on the left. Frame Sun planet on the right.
+        targetPos.set(-2.2, 0.2, 5.8);
+        targetLookAt.set(0.8, 0, 0);
         break;
       case 'about':
-        // Frame About planet on the right, HUD on the left
-        targetPos.set(-3.2, 2.5, 5);
-        targetLookAt.set(-6, 2, -2);
+        // HUD is on the left. Frame torus planet on the right.
+        targetPos.set(-8.2, 2.2, 4.0);
+        targetLookAt.set(-5.2, 2.0, -2.0);
         break;
       case 'services':
-        // Frame Services planet on the left, HUD on the right
-        targetPos.set(2.8, -3.0, 5);
-        targetLookAt.set(6, -3.5, -2);
+        // HUD is on the right. Frame cyber orb planet on the left.
+        targetPos.set(8.2, -3.2, 4.0);
+        targetLookAt.set(5.2, -3.5, -2.0);
         break;
       case 'portfolio':
-        // Focus vortex panned to the side
-        targetPos.set(3.2, -8.0, 6);
-        targetLookAt.set(0, -8.5, -2);
+        // HUD is on the left. Frame gravity vortex on the right.
+        targetPos.set(-2.2, -8.2, 4.5);
+        targetLookAt.set(0.8, -8.5, -2.0);
         break;
       case 'contact':
-        // Focus geodesic satellite
-        targetPos.set(2.5, 4.8, 5);
-        targetLookAt.set(5.5, 4.5, -2);
+        // HUD is on the right. Frame geodesic dome planet on the left.
+        targetPos.set(7.7, 4.8, 4.0);
+        targetLookAt.set(4.7, 4.5, -2.0);
         break;
     }
 
