@@ -1,0 +1,126 @@
+.sidebar {
+  width: 270px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: var(--bg-sidebar);
+  border-right: 1px solid var(--border-color);
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 100;
+  transition: background-color var(--transition-speed), border-color var(--transition-speed), left 0.4s ease;
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--text-color);
+  text-decoration: none;
+  letter-spacing: -1px;
+}
+
+.logo span {
+  color: var(--skin-color);
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 2.2rem;
+}
+
+.navList {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 50px;
+  flex: 1;
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 12px 15px;
+  border-radius: 8px;
+  color: var(--text-muted);
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.navLink:hover {
+  color: var(--text-color);
+  background-color: var(--border-color);
+}
+
+.navLinkActive {
+  color: var(--skin-color) !important;
+  background-color: var(--skin-glow);
+  font-weight: 600;
+}
+
+.navIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.footerText {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+  margin-top: auto;
+}
+
+/* Mobile Toggler Button */
+.toggler {
+  display: none;
+  width: 45px;
+  height: 40px;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  background: var(--bg-secondary);
+  cursor: pointer;
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 101;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.toggler span {
+  width: 22px;
+  height: 2px;
+  background-color: var(--skin-color);
+  transition: all 0.3s ease;
+}
+
+.togglerActive span:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.togglerActive span:nth-child(2) {
+  opacity: 0;
+}
+
+.togglerActive span:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+@media (max-width: 1199px) {
+  .sidebar {
+    left: -270px;
+  }
+  
+  .sidebarOpen {
+    left: 0;
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+  }
+  
+  .toggler {
+    display: flex;
+  }
+}

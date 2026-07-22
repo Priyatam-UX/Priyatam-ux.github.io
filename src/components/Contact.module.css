@@ -1,0 +1,233 @@
+.contactContent {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+
+.introHeaders {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.contactTitle {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.contactSubTitle {
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--skin-color);
+  letter-spacing: 1px;
+}
+
+.infoGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  width: 100%;
+}
+
+.infoCard {
+  padding: 30px 20px;
+  border-radius: 12px;
+  height: 100%;
+}
+
+.infoCardInner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.iconWrapper {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background-color: var(--skin-glow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.infoIcon {
+  width: 22px;
+  height: 22px;
+  color: var(--skin-color);
+}
+
+.infoCardInner h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.infoCardInner p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  word-break: break-all;
+}
+
+.formSection {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.formTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.formSubTitle {
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--skin-color);
+  letter-spacing: 1px;
+  margin-bottom: 40px;
+}
+
+.contactForm {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  text-align: left;
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+}
+
+.formGroup {
+  position: relative;
+  width: 100%;
+}
+
+.formControl {
+  width: 100%;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+  padding: 15px 20px;
+  border-radius: 25px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 10px var(--shadow-color);
+}
+
+.formControl:focus {
+  border-color: var(--skin-color);
+  box-shadow: 0 0 10px var(--skin-glow);
+}
+
+textarea.formControl {
+  border-radius: 18px;
+  resize: none;
+}
+
+.buttonWrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.submitBtn {
+  border: none;
+}
+
+/* Modals styling */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modalCard {
+  width: 100%;
+  max-width: 450px;
+  padding: 40px 30px;
+  border-radius: 16px;
+  text-align: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid var(--border-glass);
+}
+
+.closeBtn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+}
+
+.closeBtn:hover {
+  background-color: var(--border-color);
+  color: var(--text-color);
+}
+
+.modalIconSuccess {
+  width: 60px;
+  height: 60px;
+  color: #72b626;
+  margin-bottom: 20px;
+}
+
+.modalIconError {
+  width: 60px;
+  height: 60px;
+  color: #ec1839;
+  margin-bottom: 20px;
+}
+
+.modalCard h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.modalCard p {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+@media (max-width: 991px) {
+  .infoGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .formRow {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 575px) {
+  .infoGrid {
+    grid-template-columns: 1fr;
+  }
+}
