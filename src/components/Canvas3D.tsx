@@ -9,82 +9,131 @@ interface SceneProps {
   color: string;
 }
 
-function ParticleField({ color }: SceneProps) {
-  const ref = useRef<THREE.Points>(null);
-  
-  // Create 200 random points distributed in a sphere
-  const sphere = useMemo(() => {
-    const arr = new Float32Array(600); // 200 points * 3 coordinates
-    for (let i = 0; i < 600; i += 3) {
-      const u = Math.random();
-      const v = Math.random();
-      const theta = u * 2.0 * Math.PI;
-      const phi = Math.acos(2.0 * v - 1.0);
-      const r = 6 + Math.random() * 6; // Radius between 6 and 12
-      arr[i] = r * Math.sin(phi) * Math.cos(theta);
-      arr[i + 1] = r * Math.sin(phi) * Math.sin(theta);
-      arr[i + 2] = r * Math.cos(phi);
+function WaveGrid({ color }: SceneProps) {
+  const pointsRef = useRef<THREE.Points>(null);
+  const count = 3600; // 60x60 grid
+
+  // Generate static X/Z grid positions
+  const positions = useMemo(() => {
+    const pos = new Float32Array(count * 3);
+    const space = 0.35;
+    let i = 0;
+    for (let x = -30; x < 30; x++) {
+      for (let z = -30; z < 30; z++) {
+        pos[i] = x * space;      // X
+        pos[i + 1] = 0;          // Y (modified dynamically)
+        pos[i + 2] = z * space;  // Z
+        i += 3;
+      }
     }
-    return arr;
+    return pos;
   }, []);
 
-  useFrame((state, delta) => {
-    if (ref.current) {
-      // Rotation effect
-      ref.current.rotation.x -= delta * 0.03;
-      ref.current.rotation.y -= delta * 0.05;
-      
-      // Pull slightly toward mouse pointer
-      const pointer = state.pointer;
-      ref.current.position.x = THREE.MathUtils.lerp(ref.current.position.x, pointer.x * 1.2, 0.03);
-      ref.current.position.y = THREE.MathUtils.lerp(ref.current.position.y, pointer.y * 1.2, 0.03);
+  useFrame((state) => {
+    if (!pointsRef.current) return;
+    
+    const time = state.clock.getElapsedTime();
+    const pointer = state.pointer; // Pointer coordinates [-1, 1]
+    const geom = pointsRef.current.geometry;
+    const positionAttr = geom.attributes.position;
+    const arr = positionAttr.array as Float32Array;
+
+    let i = 0;
+    for (let x = -30; x < 30; x++) {
+      for (let z = -30; z < 30; z++) {
+        const posX = arr[i];
+        const posZ = arr[i + 2];
+
+        // Ripple/distort height based on distance from mouse coordinates
+        // Scale mouse pointer to 3D coordinate space coordinates (approx)
+        const targetX = pointer.x * 12;
+        const targetZ = pointer.y * 8;
+        const dist = Math.sqrt((posX - targetX) ** 2 + (posZ - targetZ) ** 2);
+
+        // Sine wave calculations
+        const wave1 = Math.sin(posX * 0.2 + time * 1.2) * 0.4;
+        const wave2 = Math.cos(posZ * 0.25 + time * 0.9) * 0.3;
+        
+        // Ripple push-down or pull-up from mouse hover
+        const mouseInfluence = Math.sin(dist - time * 3) * Math.max(0, 2 - dist * 0.2) * 0.25;
+
+        arr[i + 1] = wave1 + wave2 + mouseInfluence;
+        i += 3;
+      }
     }
+    positionAttr.needsUpdate = true;
+
+    // Slow rotation
+    pointsRef.current.rotation.y = Math.sin(time * 0.04) * 0.08;
   });
 
   return (
-    <Points ref={ref} positions={sphere} stride={3} frustumCulled={false}>
-      <PointMaterial
-        transparent
-        color={color}
+    <points ref={pointsRef}>
+      <bufferGeometry>
+        <bufferAttribute
+          attach="attributes-position"
+          args={[positions, 3]}
+        />
+      </bufferGeometry>
+      <pointsMaterial
         size={0.06}
-        sizeAttenuation={true}
+        color={color}
+        transparent
+        opacity={0.3}
+        sizeAttenuation
         depthWrite={false}
-        opacity={0.4}
       />
-    </Points>
+    </points>
   );
 }
 
 function FloatingShape({ color }: SceneProps) {
   const meshRef = useRef<THREE.Mesh>(null);
   const { width } = useThree().viewport;
-  
-  // Detect mobile sizing from Three's viewport dimensions
+  const [scrollOffset, setScrollOffset] = useState(0);
+
+  // Monitor scroll for interactive 3D rotation offsets
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPercent = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+      setScrollOffset(scrollPercent);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const isMobile = width < 8;
-  const position: [number, number, number] = isMobile ? [0, -1.8, 0] : [2.2, 0, 0];
-  const scale = isMobile ? 0.9 : 1.3;
+  const position: [number, number, number] = isMobile ? [0, -1.8, 0] : [2.5, 0, 0];
+  const scale = isMobile ? 0.95 : 1.35;
 
   useFrame((state) => {
     if (meshRef.current) {
       const time = state.clock.getElapsedTime();
-      meshRef.current.rotation.x = Math.sin(time / 4) * 0.15;
-      meshRef.current.rotation.y = time / 5;
+      
+      // Combine normal time rotation with scroll-based rotation
+      meshRef.current.rotation.x = Math.sin(time / 4) * 0.15 + scrollOffset * 2.0;
+      meshRef.current.rotation.y = time / 5 + scrollOffset * 1.5;
       meshRef.current.rotation.z = Math.cos(time / 4) * 0.15;
+
+      // Mouse drag reactions
+      const pointer = state.pointer;
+      meshRef.current.position.x = THREE.MathUtils.lerp(meshRef.current.position.x, position[0] + pointer.x * 0.5, 0.05);
+      meshRef.current.position.y = THREE.MathUtils.lerp(meshRef.current.position.y, position[1] + pointer.y * 0.5, 0.05);
     }
   });
 
   return (
-    <Float speed={1.8} rotationIntensity={1.2} floatIntensity={1.5}>
+    <Float speed={2.0} rotationIntensity={1.4} floatIntensity={1.8}>
       <mesh ref={meshRef} position={position} scale={scale}>
         <icosahedronGeometry args={[1, 1]} />
         <MeshDistortMaterial
           color={color}
-          roughness={0.2}
-          metalness={0.5}
-          distort={0.4}
-          speed={2.5}
+          roughness={0.15}
+          metalness={0.55}
+          distort={0.45}
+          speed={3.0}
           clearcoat={1}
-          clearcoatRoughness={0.1}
+          clearcoatRoughness={0.05}
         />
       </mesh>
     </Float>
@@ -94,11 +143,13 @@ function FloatingShape({ color }: SceneProps) {
 export default function Canvas3D({ color }: SceneProps) {
   return (
     <div className="canvas-container">
-      <Canvas camera={{ position: [0, 0, 7], fov: 60 }} dpr={[1, 2]}>
-        <ambientLight intensity={0.6} />
+      <Canvas camera={{ position: [0, 6, 9], fov: 60 }} dpr={[1, 2]}>
+        <ambientLight intensity={0.5} />
         <directionalLight position={[10, 10, 10]} intensity={1.5} />
         <pointLight position={[-10, -10, -10]} intensity={1.2} color={color} />
-        <ParticleField color={color} />
+        {/* Full screen background grid wave */}
+        <WaveGrid color={color} />
+        {/* Floating primary interactive geometry */}
         <FloatingShape color={color} />
       </Canvas>
     </div>
