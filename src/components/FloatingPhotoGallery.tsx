@@ -206,6 +206,8 @@ const PHOTOS = [
 ];
 
 export default function FloatingPhotoGallery() {
+  const [activeIndex, setActiveIndex] = useState(0);
+
   return (
     <div
       style={{
@@ -219,31 +221,31 @@ export default function FloatingPhotoGallery() {
         pointerEvents: 'auto',
       }}
     >
-      {/* Back card (speaking photo) — offset bottom-right, rotated */}
-      <div style={{
-        position: 'absolute',
-        top: 55,
-        left: 55,
-        width: 260,
-        height: 320,
-        transform: 'rotate(6deg)',
-        zIndex: 1,
-      }}>
-        <Photo3DCard {...PHOTOS[1]} index={1} style={{ width: '100%', height: '100%' }} />
-      </div>
-
-      {/* Front card (convocation photo) — main card */}
-      <div style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: 290,
-        height: 360,
-        transform: 'rotate(-3deg)',
-        zIndex: 2,
-      }}>
-        <Photo3DCard {...PHOTOS[0]} index={0} style={{ width: '100%', height: '100%' }} />
-      </div>
+      {PHOTOS.map((photo, i) => {
+        const isActive = i === activeIndex;
+        return (
+          <motion.div
+            key={i}
+            onClick={() => setActiveIndex(i)}
+            animate={{
+              top: isActive ? 0 : 55,
+              left: isActive ? 0 : 55,
+              width: isActive ? 290 : 260,
+              height: isActive ? 360 : 320,
+              rotate: isActive ? -3 : 6,
+              zIndex: isActive ? 2 : 1,
+            }}
+            transition={{ type: 'spring', damping: 20, stiffness: 100 }}
+            style={{ 
+              position: 'absolute', 
+              cursor: isActive ? 'default' : 'pointer',
+              transformOrigin: 'center center'
+            }}
+          >
+            <Photo3DCard {...photo} index={i} style={{ width: '100%', height: '100%' }} />
+          </motion.div>
+        );
+      })}
     </div>
   );
 }
