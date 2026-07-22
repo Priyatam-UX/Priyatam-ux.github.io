@@ -88,7 +88,7 @@ export default function Portfolio() {
   } as const;
 
   return (
-    <section className="section" id="portfolio">
+    <div style={{ width: '100%' }}>
       <div className="container">
         <div className="section-title">
           <h2>Portfolio</h2>
@@ -148,6 +148,6 @@ export default function Portfolio() {
           ))}
         </motion.div>
       </div>
-    </section>
+    </div>
   );
 }

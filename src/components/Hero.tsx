@@ -3,15 +3,17 @@
 import { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, Download, ChevronsDown } from 'lucide-react';
+import Terminal from './Terminal';
 import styles from './Hero.module.css';
 
 interface HeroProps {
   onNavigate: (section: string) => void;
+  skinColor: string;
 }
 
 const words = ['Full-Stack Developer', 'Software Engineer', 'ServiceNow Developer', 'Tech Blogger'];
 
-export default function Hero({ onNavigate }: HeroProps) {
+export default function Hero({ onNavigate, skinColor }: HeroProps) {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [currentText, setCurrentText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
@@ -72,12 +74,10 @@ export default function Hero({ onNavigate }: HeroProps) {
   } as const;
 
   return (
-    <motion.section 
-      style={{ opacity: heroOpacity, scale: heroScale }}
-      className={`${styles.heroSection} section`} 
-      id="home"
+    <motion.div 
+      style={{ opacity: heroOpacity, scale: heroScale, width: '100%', height: '100%', position: 'relative', display: 'flex', alignItems: 'center' }}
     >
-      <div className="container" style={{ width: '100%' }}>
+      <div style={{ width: '100%' }}>
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -125,15 +125,17 @@ export default function Hero({ onNavigate }: HeroProps) {
             </motion.div>
           </div>
           
-          {/* Spacer layout for desktop 3D WebGL shape */}
-          <div className={styles.heroVisual} />
+          {/* Cyber Interactive CLI Console Terminal */}
+          <div className={styles.heroVisual}>
+            <Terminal skinColor={skinColor} />
+          </div>
         </motion.div>
       </div>
 
       {/* Floating Scroll Indicator */}
       <motion.div 
         initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 0.6, y: 0 }}
+        animate={{ opacity: 0.5, y: 0 }}
         transition={{ delay: 1.5, duration: 0.8 }}
         className={styles.scrollIndicator}
         onClick={() => onNavigate('about')}
@@ -141,6 +143,6 @@ export default function Hero({ onNavigate }: HeroProps) {
         <span>Scroll Down</span>
         <ChevronsDown className={styles.scrollArrow} size={18} />
       </motion.div>
-    </motion.section>
+    </motion.div>
   );
 }

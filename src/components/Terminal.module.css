@@ -1,0 +1,146 @@
+.terminalWrapper {
+  width: 100%;
+  max-width: 580px;
+  height: 380px;
+  background-color: rgba(5, 5, 12, 0.85);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 25px var(--skin-glow);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.85rem;
+  transition: border-color var(--transition-speed);
+}
+
+.terminalWrapper:hover {
+  border-color: var(--skin-color);
+}
+
+/* Screen shake animation class */
+.shake {
+  animation: shakeScreen 0.4s ease-in-out;
+}
+
+@keyframes shakeScreen {
+  0%, 100% { transform: translate(0, 0); }
+  10%, 30%, 50%, 70%, 90% { transform: translate(-2px, 1px); }
+  20%, 40%, 60%, 80% { transform: translate(2px, -1px); }
+}
+
+.header {
+  height: 35px;
+  background-color: rgba(13, 13, 25, 0.95);
+  border-bottom: 1px solid var(--border-color);
+  padding: 0 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dots {
+  display: flex;
+  gap: 6px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.dotRed { background-color: #f43f5e; }
+.dotYellow { background-color: #eab308; }
+.dotGreen { background-color: #10b981; }
+
+.title {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+.body {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  color: #10b981; /* Matrix green color */
+}
+
+/* Scrollbar inside console */
+.body::-webkit-scrollbar {
+  width: 5px;
+}
+.body::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+}
+
+.welcomeText {
+  color: var(--skin-color);
+  margin-bottom: 10px;
+}
+
+.commandHistory {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.historyItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.inputLine {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #ffffff;
+}
+
+.prompt {
+  color: var(--skin-color);
+}
+
+.inputField {
+  flex: 1;
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 0;
+  caret-color: var(--skin-color);
+}
+
+/* Clickable Quick action chips list */
+.chipsContainer {
+  display: flex;
+  gap: 8px;
+  padding: 10px 20px;
+  background-color: rgba(13, 13, 25, 0.95);
+  border-top: 1px solid var(--border-color);
+  flex-wrap: wrap;
+}
+
+.chip {
+  background-color: rgba(6, 182, 212, 0.08);
+  border: 1px dashed var(--border-color);
+  color: var(--text-color);
+  padding: 3px 8px;
+  border-radius: 3px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.chip:hover {
+  background-color: var(--skin-color);
+  color: var(--text-inverse);
+  border-color: var(--skin-color);
+  box-shadow: 0 0 10px var(--skin-glow);
+}

@@ -1,11 +1,17 @@
 import type { Metadata } from "next";
-import { Outfit, Inter } from "next/font/google";
+import { Syne, Fira_Code, Inter } from "next/font/google";
 import "./globals.css";
 
-const outfit = Outfit({
+const syne = Syne({
   subsets: ["latin"],
-  variable: "--font-outfit",
-  weight: ["300", "400", "500", "600", "700", "800"],
+  variable: "--font-title",
+  weight: ["700", "800"],
+});
+
+const firaCode = Fira_Code({
+  subsets: ["latin"],
+  variable: "--font-mono",
+  weight: ["400", "500", "600", "700"],
 });
 
 const inter = Inter({
@@ -15,8 +21,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Priyatam | Software Engineer & Full-Stack Developer Portfolio",
-  description: "Explore the modern interactive developer portfolio of Priyatam, featuring advanced web engineering, interactive 3D visualizations, and premium animated interfaces.",
+  title: "Priyatam | Creative Software Engineer Portfolio",
+  description: "Explore the wobbly interactive cyberpunk developer portfolio of Priyatam, featuring high-end animations, interactive WebGL point clouds, and a custom mono-CLI console.",
   keywords: ["Priyatam", "Portfolio", "Software Engineer", "Full-Stack Developer", "Next.js", "Three.js", "React Three Fiber", "Framer Motion", "Bangalore"],
   authors: [{ name: "Priyatam" }],
 };
@@ -27,7 +33,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${outfit.variable} ${inter.variable}`}>
+    <html lang="en" className={`${syne.variable} ${firaCode.variable} ${inter.variable} scanlines`}>
       <body>
         {children}
       </body>

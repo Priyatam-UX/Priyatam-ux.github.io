@@ -57,7 +57,7 @@ export default function Services() {
   } as const;
 
   return (
-    <section className="section" id="services">
+    <div style={{ width: '100%' }}>
       <div className="container">
         <div className="section-title">
           <h2>Services</h2>
@@ -86,6 +86,6 @@ export default function Services() {
           })}
         </motion.div>
       </div>
-    </section>
+    </div>
   );
 }

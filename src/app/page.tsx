@@ -16,7 +16,7 @@ const Canvas3D = dynamic(() => import('@/components/Canvas3D'), { ssr: false });
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState('home');
-  const [currentColor, setCurrentColor] = useState('#fa5b0f'); // Default skin color (orange)
+  const [currentColor, setCurrentColor] = useState('#06b6d4'); // Default skin color (cyan)
 
   // Track active section during scroll using IntersectionObserver
   useEffect(() => {
@@ -24,7 +24,7 @@ export default function Home() {
     
     const observerOptions = {
       root: null,
-      rootMargin: '-40% 0px -50% 0px', // Activates when section is centered in viewport
+      rootMargin: '-30% 0px -60% 0px', // Activates when section is centered in viewport
       threshold: 0.05,
     };
 
@@ -48,7 +48,6 @@ export default function Home() {
     setActiveSection(id);
     const element = document.getElementById(id);
     if (element) {
-      // Calculate top navbar offset (80px)
       const offset = 80;
       const bodyRect = document.body.getBoundingClientRect().top;
       const elementRect = element.getBoundingClientRect().top;
@@ -64,7 +63,7 @@ export default function Home() {
 
   return (
     <main className="main-wrapper">
-      {/* Dynamic 3D WebGL background */}
+      {/* Dynamic 3D WebGL Constellation Background */}
       <Canvas3D color={currentColor} />
 
       {/* Trailing cursor spotlight */}
@@ -76,13 +75,37 @@ export default function Home() {
       {/* Floating Top Navigation */}
       <Navbar activeSection={activeSection} setActiveSection={handleNavigate} />
 
-      {/* Page Sections Content Wrapper */}
-      <div className="content-wrapper interactive-content">
-        <Hero onNavigate={handleNavigate} />
-        <About />
-        <Services />
-        <Portfolio />
-        <Contact />
+      {/* Page Sections Stacking Content Wrapper */}
+      <div className="stack-container interactive-content">
+        <section className="stack-section" id="home">
+          <div className="content-inner">
+            <Hero onNavigate={handleNavigate} skinColor={currentColor} />
+          </div>
+        </section>
+
+        <section className="stack-section" id="about">
+          <div className="content-inner">
+            <About />
+          </div>
+        </section>
+
+        <section className="stack-section" id="services">
+          <div className="content-inner">
+            <Services />
+          </div>
+        </section>
+
+        <section className="stack-section" id="portfolio">
+          <div className="content-inner">
+            <Portfolio />
+          </div>
+        </section>
+
+        <section className="stack-section" id="contact">
+          <div className="content-inner">
+            <Contact />
+          </div>
+        </section>
       </div>
     </main>
   );

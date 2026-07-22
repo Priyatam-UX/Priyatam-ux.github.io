@@ -88,7 +88,7 @@ export default function About() {
   } as const;
 
   return (
-    <section className="section" id="about">
+    <div style={{ width: '100%' }}>
       <div className="container">
         <div className="section-title">
           <h2>About Me</h2>
@@ -209,6 +209,6 @@ export default function About() {
 
         </motion.div>
       </div>
-    </section>
+    </div>
   );
 }
