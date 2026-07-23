@@ -146,8 +146,12 @@ function CookingPlannerScene() {
 
 export default function Portfolio3DScenes({ type, index = 0 }: { type: string, index?: number }) {
   const [mounted, setMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    // Detect mobile to avoid exceeding the 4-context WebGL limit which causes "blinking"
+    setIsMobile(window.innerWidth <= 991);
+
     // Stagger the mounting of each WebGL scene by 400ms per index
     // This prevents 4 WebGL contexts from compiling shaders at the exact same millisecond
     const timer = setTimeout(() => {
@@ -156,7 +160,10 @@ export default function Portfolio3DScenes({ type, index = 0 }: { type: string, i
     return () => clearTimeout(timer);
   }, [index]);
 
-  if (!mounted) return <div style={{ position: 'absolute', inset: 0, zIndex: 0, borderRadius: '15px', backgroundColor: 'var(--skin-color)', opacity: 0.02 }} />;
+  // Fallback for SSR or mobile WebGL limit
+  if (!mounted || isMobile) return (
+    <div style={{ position: 'absolute', inset: 0, zIndex: 0, borderRadius: '15px', backgroundColor: 'var(--skin-color)', opacity: 0.05 }} />
+  );
 
   return (
     <div style={{ position: 'absolute', inset: 0, zIndex: 0, borderRadius: '15px', overflow: 'hidden' }}>
