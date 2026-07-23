@@ -21,10 +21,50 @@
   height: 260px;
   padding: 0;
   border: 1px solid var(--border-color);
+  position: relative;
+}
+
+/* Cyber Scanner Animations */
+@keyframes cyberScan {
+  0% { top: -10%; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { top: 110%; opacity: 0; }
+}
+
+.cyberScanner {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--skin-color);
+  box-shadow: 0 0 15px var(--skin-color), 0 0 30px var(--skin-color);
+  animation: cyberScan 4s linear infinite;
+  z-index: 2;
+  pointer-events: none;
+}
+
+@keyframes gridDrift {
+  0% { background-position: 0 0; }
+  100% { background-position: 40px 40px; }
+}
+
+.techGrid {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 20px 20px;
+  animation: gridDrift 6s linear infinite;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.6;
 }
 
 .imgWrapper {
-  position: relative;
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -35,30 +75,39 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s ease;
+  transition: all 0.5s ease;
+  mix-blend-mode: luminosity;
+  opacity: 0.4;
 }
+
 .overlay {
   position: absolute;
-  top: 0;
+  bottom: 0;
   left: 0;
   width: 100%;
-  height: 100%;
-  background: linear-gradient(to top, rgba(2,2,8, 0.8) 0%, rgba(2,2,8, 0.1) 100%);
+  padding: 25px;
+  background: linear-gradient(to top, rgba(2,2,8, 0.95) 0%, rgba(2,2,8, 0.6) 60%, transparent 100%);
   display: flex;
   align-items: flex-end;
-  padding: 25px;
   z-index: 10;
-  pointer-events: none; /* Let hover events pass through to TiltCard */
+  pointer-events: none;
+  transition: all 0.5s ease;
 }
 
 .overlayContent {
   width: 100%;
-  pointer-events: auto; /* Re-enable pointer events for text and links */
+  pointer-events: auto;
 }
 
-/* Image Parallax Zoom on Hover */
+/* Hover Effects */
 .projectCard:hover .projectImg {
-  transform: scale(1.15);
+  transform: scale(1.1);
+  mix-blend-mode: normal;
+  opacity: 0.8;
+}
+
+.projectCard:hover .overlay {
+  background: linear-gradient(to top, rgba(2,2,8, 0.98) 0%, rgba(2,2,8, 0.8) 80%, transparent 100%);
 }
 
 .projTitle {
@@ -66,13 +115,15 @@
   font-size: 1.2rem;
   font-weight: 700;
   margin-bottom: 8px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
 }
 
 .projDesc {
-  color: #d0d0d0;
+  color: #e2e8f0;
   font-size: 0.8rem;
   line-height: 1.5;
   margin-bottom: 15px;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.8);
 }
 
 .tags {
@@ -84,6 +135,7 @@
 
 .tagPill {
   background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(4px);
   color: #ffffff;
   padding: 3px 8px;
   border-radius: 4px;
@@ -131,27 +183,4 @@
   .projectCard {
     height: 280px;
   }
-}
-
-@keyframes gradientShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-.animatedBg {
-  background-size: 200% 200% !important;
-  animation: gradientShift 10s ease infinite;
-  border-radius: 6px;
-  position: relative;
-  overflow: hidden;
-}
-
-/* Optional overlay to give it a slight glass effect over the gradient */
-.animatedBg::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at top right, rgba(255,255,255,0.03), transparent 50%);
-  pointer-events: none;
 }

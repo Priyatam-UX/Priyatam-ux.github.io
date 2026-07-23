@@ -3,11 +3,7 @@
 import { motion } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
 import { useRef } from 'react';
-import dynamic from 'next/dynamic';
 import TiltCard from './TiltCard';
-
-// Dynamically import the highly optimized localized 3D scenes
-const Portfolio3DScenes = dynamic(() => import('./Portfolio3DScenes'), { ssr: false });
 
 function GithubIcon({ size = 20 }: { size?: number }) {
   return (
@@ -27,6 +23,7 @@ function GithubIcon({ size = 20 }: { size?: number }) {
     </svg>
   );
 }
+
 import styles from './Portfolio.module.css';
 
 const projects = [
@@ -115,10 +112,19 @@ export default function Portfolio() {
               <div className="laser-card" style={{ height: '100%', position: 'relative' }}>
                 <TiltCard className={`${styles.projectCard} laser-card-content`}>
                   
-                  {/* Localized, robust 3D WebGL Canvas */}
-                  <Portfolio3DScenes type={project.id} />
+                  {/* Cyber Scanner and Grid Animations */}
+                  <div className={styles.techGrid}></div>
+                  <div className={styles.cyberScanner} style={{ '--skin-color': project.themeColor } as React.CSSProperties}></div>
                   
-                  {/* Fixed overlay to sit perfectly on top of the 3D scene */}
+                  <div className={styles.imgWrapper}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className={styles.projectImg}
+                    />
+                  </div>
+                  
                   <div className={styles.overlay}>
                     <div className={styles.overlayContent}>
                       <h4 className={styles.projTitle}>{project.title}</h4>
@@ -138,6 +144,7 @@ export default function Portfolio() {
                           target="_blank"
                           rel="noopener noreferrer"
                           className={styles.linkIcon}
+                          style={{ '--skin-color': project.themeColor, '--skin-glow': `${project.themeColor}88` } as React.CSSProperties}
                           aria-label={`View code for ${project.title}`}
                         >
                           <GithubIcon size={20} />
@@ -149,6 +156,7 @@ export default function Portfolio() {
                             target="_blank"
                             rel="noopener noreferrer"
                             className={styles.linkIcon}
+                            style={{ '--skin-color': project.themeColor, '--skin-glow': `${project.themeColor}88` } as React.CSSProperties}
                             aria-label={`Live Demo of ${project.title}`}
                           >
                             <ExternalLink size={20} />
