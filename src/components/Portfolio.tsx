@@ -2,7 +2,10 @@
 
 import { motion } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
+import dynamic from 'next/dynamic';
 import TiltCard from './TiltCard';
+
+const Portfolio3DCanvas = dynamic(() => import('./Portfolio3DCanvas'), { ssr: false });
 
 function GithubIcon({ size = 20 }: { size?: number }) {
   return (
@@ -26,6 +29,7 @@ import styles from './Portfolio.module.css';
 
 const projects = [
   {
+    id: 'jobpilot',
     title: 'JobPilot AI',
     github: 'https://github.com/Priyatam-UX/JobPilot-AI',
     live: 'https://jobspilotai.space/',
@@ -34,6 +38,7 @@ const projects = [
     description: 'Enterprise AI-powered job application assistant automating search discovery, ATS optimization, and multi-agent workflows.',
   },
   {
+    id: 'stadiumpilot',
     title: 'StadiumPilot AI',
     github: 'https://github.com/Priyatam-UX/StadiumPilotBot',
     live: 'https://stadiumpilot-bot.vercel.app/',
@@ -42,6 +47,7 @@ const projects = [
     description: 'AI command center and decision-support platform for large-scale tournament venues integrating live telemetry and Gemini AI.',
   },
   {
+    id: 'monsoonshield',
     title: 'MonsoonShield AI',
     github: 'https://github.com/Priyatam-UX/MonsoonShield-AI',
     live: 'https://monsoon-shield-ai.vercel.app/',
@@ -50,6 +56,7 @@ const projects = [
     description: 'Preparedness and citizen assistance platform with real-time risk evaluations, offline PWA access, and AI safety overlays.',
   },
   {
+    id: 'cookingplanner',
     title: 'Personal Cooking Planner',
     github: 'https://github.com/Priyatam-UX/Personal-Cooking-Planner',
     live: 'https://personal-cooking-planner.vercel.app/',
@@ -58,69 +65,6 @@ const projects = [
     description: 'Client-side AI micro-app to generate custom daily cooking plans tailored to budget, diet, and existing pantry ingredients.',
   },
 ];
-
-const CyberBackground = ({ color }: { color: string }) => {
-  return (
-    <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', zIndex: 0, borderRadius: '6px', background: '#020208' }}>
-      {/* Animated glowing orbs */}
-      <motion.div
-        animate={{
-          x: ['-20%', '20%', '-20%'],
-          y: ['-20%', '20%', '-20%'],
-          scale: [1, 1.5, 1],
-        }}
-        transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut' }}
-        style={{
-          position: 'absolute',
-          top: '-10%', left: '-10%',
-          width: '70%', height: '70%',
-          background: `radial-gradient(circle, ${color} 0%, transparent 60%)`,
-          opacity: 0.45,
-          filter: 'blur(30px)',
-        }}
-      />
-      <motion.div
-        animate={{
-          x: ['20%', '-20%', '20%'],
-          y: ['20%', '-20%', '20%'],
-          scale: [1.2, 1, 1.2],
-        }}
-        transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
-        style={{
-          position: 'absolute',
-          bottom: '-10%', right: '-10%',
-          width: '70%', height: '70%',
-          background: `radial-gradient(circle, ${color} 0%, transparent 60%)`,
-          opacity: 0.35,
-          filter: 'blur(40px)',
-        }}
-      />
-      
-      {/* Tech Grid overlay */}
-      <div 
-        style={{ 
-          position: 'absolute', inset: 0, 
-          backgroundImage: 'linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)',
-          backgroundSize: '24px 24px',
-          opacity: 0.6
-        }} 
-      />
-      
-      {/* Slow horizontal scanline */}
-      <motion.div
-        animate={{ y: ['-10%', '110%'] }}
-        transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
-        style={{
-          position: 'absolute', top: 0, left: 0, right: 0, height: '2px',
-          background: `linear-gradient(90deg, transparent, ${color}, transparent)`,
-          opacity: 0.8,
-          boxShadow: `0 0 15px ${color}`
-        }}
-      />
-    </div>
-  );
-};
-
 
 export default function Portfolio() {
   const containerVariants = {
@@ -162,7 +106,7 @@ export default function Portfolio() {
             <motion.div key={index} variants={itemVariants}>
               <div className="laser-card" style={{ height: '100%' }}>
                 <TiltCard className={`${styles.projectCard} laser-card-content`}>
-                  <CyberBackground color={project.themeColor} />
+                  <Portfolio3DCanvas type={project.id} color={project.themeColor} />
                   <div 
                     style={{ 
                       position: 'relative',
