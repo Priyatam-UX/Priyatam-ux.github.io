@@ -99,47 +99,51 @@ export default function Portfolio() {
             <motion.div key={index} variants={itemVariants}>
               <div className="laser-card" style={{ height: '100%' }}>
                 <TiltCard className={`${styles.projectCard} laser-card-content`}>
-                  <div className={styles.imgWrapper}>
-                    {/* Render gradient background instead of image */}
-                    <div style={{ width: '100%', height: '100%', background: project.bgGradient }} />
-                    <div className={styles.overlay}>
-                      <div className={styles.overlayContent}>
-                        <h4 className={styles.projTitle}>{project.title}</h4>
-                        <p className={styles.projDesc}>{project.description}</p>
-                        
-                        <div className={styles.tags}>
-                          {project.tags.map((tag, tIdx) => (
-                            <span key={tIdx} className={styles.tagPill}>
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
+                  <div 
+                    style={{ 
+                      width: '100%', 
+                      height: '100%', 
+                      background: project.bgGradient,
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'center',
+                      padding: '25px'
+                    }}
+                  >
+                    <h4 className={styles.projTitle}>{project.title}</h4>
+                    <p className={styles.projDesc}>{project.description}</p>
+                    
+                    <div className={styles.tags}>
+                      {project.tags.map((tag, tIdx) => (
+                        <span key={tIdx} className={styles.tagPill}>
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
 
-                        <div className={styles.links}>
-                          <a
-                            href={project.github}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className={styles.linkIcon}
-                            aria-label={`View code for ${project.title}`}
-                          >
-                            <GithubIcon size={20} />
-                            <span>Code</span>
-                          </a>
-                          {project.live && (
-                            <a
-                              href={project.live}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className={styles.linkIcon}
-                              aria-label={`Live Demo of ${project.title}`}
-                            >
-                              <ExternalLink size={20} />
-                              <span>Live</span>
-                            </a>
-                          )}
-                        </div>
-                      </div>
+                    <div className={styles.links}>
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles.linkIcon}
+                        aria-label={`View code for ${project.title}`}
+                      >
+                        <GithubIcon size={20} />
+                        <span>Code</span>
+                      </a>
+                      {project.live && (
+                        <a
+                          href={project.live}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={styles.linkIcon}
+                          aria-label={`Live Demo of ${project.title}`}
+                        >
+                          <ExternalLink size={20} />
+                          <span>Live</span>
+                        </a>
+                      )}
                     </div>
                   </div>
                 </TiltCard>
