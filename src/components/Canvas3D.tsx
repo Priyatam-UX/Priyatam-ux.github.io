@@ -179,43 +179,31 @@ function PlanetAchievements({ color }: { color: string }) {
 // 5. Planet Portfolio: Gravity Particle Vortex
 function PlanetPortfolio({ color }: { color: string }) {
   const vortexRef = useRef<THREE.Points>(null);
-  const count = 400;
+  const count = 600;
 
-  const [particles, angles, radii] = useMemo(() => {
+  const particles = useMemo(() => {
     const pos = new Float32Array(count * 3);
-    const ang = new Float32Array(count);
-    const rad = new Float32Array(count);
-    
     for (let i = 0; i < count; i++) {
-      const r = Math.random() * 1.6 + 0.3;
-      const theta = Math.random() * Math.PI * 2;
-      rad[i] = r;
-      ang[i] = theta;
+      // Create a nice static spiral galaxy shape
+      const radius = Math.random() * 1.8 + 0.2;
+      // Add more spin to the inner particles during creation (spiral arms)
+      const spinAngle = radius * 3.5; 
+      const randomAngle = Math.random() * Math.PI * 2;
+      const finalAngle = spinAngle + randomAngle;
 
-      pos[i * 3] = Math.cos(theta) * r;
-      pos[i * 3 + 1] = (Math.random() - 0.5) * 0.3;
-      pos[i * 3 + 2] = Math.sin(theta) * r;
+      pos[i * 3] = Math.cos(finalAngle) * radius;
+      // Flatten the disk, with slight bulge in center
+      pos[i * 3 + 1] = (Math.random() - 0.5) * (0.4 / radius); 
+      pos[i * 3 + 2] = Math.sin(finalAngle) * radius;
     }
-    return [pos, ang, rad];
+    return pos;
   }, []);
 
-  useFrame((state) => {
-    if (!vortexRef.current) return;
-    const time = state.clock.getElapsedTime();
-    const ptsGeom = vortexRef.current.geometry;
-    const ptsArr = ptsGeom.attributes.position.array as Float32Array;
-
-    for (let i = 0; i < count; i++) {
-      // Swirl physics: speed increases as radius decreases (Keplerian-like)
-      angles[i] += 0.02 / Math.sqrt(radii[i]);
-      ptsArr[i * 3] = Math.cos(angles[i]) * radii[i];
-      ptsArr[i * 3 + 2] = Math.sin(angles[i]) * radii[i];
-      
-      // Volumetric wave height
-      ptsArr[i * 3 + 1] = Math.sin(time + radii[i] * 4) * 0.1;
+  useFrame((state, delta) => {
+    if (vortexRef.current) {
+      // Extremely cheap GPU matrix rotation instead of CPU array updates
+      vortexRef.current.rotation.y += delta * 0.15;
     }
-    ptsGeom.attributes.position.needsUpdate = true;
-    vortexRef.current.rotation.y = time * 0.05;
   });
 
   return (
@@ -230,7 +218,7 @@ function PlanetPortfolio({ color }: { color: string }) {
         <bufferGeometry>
           <bufferAttribute attach="attributes-position" args={[particles, 3]} />
         </bufferGeometry>
-        <pointsMaterial size={0.065} color={color} transparent opacity={0.8} />
+        <pointsMaterial size={0.045} color={color} transparent opacity={0.8} />
       </points>
     </group>
   );
