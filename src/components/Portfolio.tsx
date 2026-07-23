@@ -6,8 +6,8 @@ import { useRef } from 'react';
 import dynamic from 'next/dynamic';
 import TiltCard from './TiltCard';
 
-// Dynamically import the 3D wrapper to avoid SSR issues
-const Portfolio3DWrapper = dynamic(() => import('./Portfolio3DWrapper'), { ssr: false });
+// Dynamically import the highly optimized localized 3D scenes
+const Portfolio3DScenes = dynamic(() => import('./Portfolio3DScenes'), { ssr: false });
 
 function GithubIcon({ size = 20 }: { size?: number }) {
   return (
@@ -115,55 +115,46 @@ export default function Portfolio() {
               <div className="laser-card" style={{ height: '100%', position: 'relative' }}>
                 <TiltCard className={`${styles.projectCard} laser-card-content`}>
                   
-                  {/* Global View port renders inside here */}
-                  <Portfolio3DWrapper type={project.id} color={project.themeColor} eventSource={containerRef} />
+                  {/* Localized, robust 3D WebGL Canvas */}
+                  <Portfolio3DScenes type={project.id} />
                   
-                  <div className={styles.imgWrapper}>
-                    {/* Fallback image with heavy opacity drop to allow 3D to shine through */}
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className={styles.projectImg}
-                      style={{ opacity: 0.2 }}
-                    />
-                    <div className={styles.overlay}>
-                      <div className={styles.overlayContent}>
-                        <h4 className={styles.projTitle}>{project.title}</h4>
-                        <p className={styles.projDesc}>{project.description}</p>
-                        
-                        <div className={styles.tags}>
-                          {project.tags.map((tag, tIdx) => (
-                            <span key={tIdx} className={styles.tagPill}>
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
+                  {/* Fixed overlay to sit perfectly on top of the 3D scene */}
+                  <div className={styles.overlay}>
+                    <div className={styles.overlayContent}>
+                      <h4 className={styles.projTitle}>{project.title}</h4>
+                      <p className={styles.projDesc}>{project.description}</p>
+                      
+                      <div className={styles.tags}>
+                        {project.tags.map((tag, tIdx) => (
+                          <span key={tIdx} className={styles.tagPill}>
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
 
-                        <div className={styles.links}>
+                      <div className={styles.links}>
+                        <a
+                          href={project.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={styles.linkIcon}
+                          aria-label={`View code for ${project.title}`}
+                        >
+                          <GithubIcon size={20} />
+                          <span>Code</span>
+                        </a>
+                        {project.live && (
                           <a
-                            href={project.github}
+                            href={project.live}
                             target="_blank"
                             rel="noopener noreferrer"
                             className={styles.linkIcon}
-                            aria-label={`View code for ${project.title}`}
+                            aria-label={`Live Demo of ${project.title}`}
                           >
-                            <GithubIcon size={20} />
-                            <span>Code</span>
+                            <ExternalLink size={20} />
+                            <span>Live</span>
                           </a>
-                          {project.live && (
-                            <a
-                              href={project.live}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className={styles.linkIcon}
-                              aria-label={`Live Demo of ${project.title}`}
-                            >
-                              <ExternalLink size={20} />
-                              <span>Live</span>
-                            </a>
-                          )}
-                        </div>
+                        )}
                       </div>
                     </div>
                   </div>
