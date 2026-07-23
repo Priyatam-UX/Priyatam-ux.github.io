@@ -135,8 +135,8 @@ function PlanetAbout({ color }: { color: string }) {
   );
 }
 
-// 4. Planet Services: Double Orb satellite system
-function PlanetServices({ color }: { color: string }) {
+// 4. Planet Achievements: Double Orb satellite system
+function PlanetAchievements({ color }: { color: string }) {
   const coreRef = useRef<THREE.Mesh>(null);
   const satelliteRef = useRef<THREE.Mesh>(null);
 
@@ -277,10 +277,10 @@ function CameraManager({ activeSection }: { activeSection: string }) {
         targetPos.set(-8.2, 2.2, 4.0);
         targetLookAt.set(-5.2, 2.0, -2.0);
         break;
-      case 'services':
-        // HUD is on the right. Frame cyber orb planet on the left.
-        targetPos.set(8.2, -3.2, 4.0);
-        targetLookAt.set(5.2, -3.5, -2.0);
+      case 'achievements':
+        // HUD is on the left. Frame cyber orb planet on the right.
+        targetPos.set(3.2, -3.2, 4.0);
+        targetLookAt.set(6.2, -3.5, -2.0);
         break;
       case 'portfolio':
         // HUD is on the left. Frame gravity vortex on the right.
@@ -324,7 +324,7 @@ export default function Canvas3D({ color, activeSection }: SceneProps) {
         {/* The 5 Cosmos Planet Sections */}
         <PlanetHero color={color} />
         <PlanetAbout color={color} />
-        <PlanetServices color={color} />
+        <PlanetAchievements color={color} />
         <PlanetPortfolio color={color} />
         <PlanetContact color={color} />
       </Canvas>

@@ -8,7 +8,7 @@ import ThemeToggle from '@/components/ThemeToggle';
 import CursorGlow from '@/components/CursorGlow';
 import Hero from '@/components/Hero';
 import About from '@/components/About';
-import Services from '@/components/Services';
+import Achievements from '@/components/Achievements';
 import Portfolio from '@/components/Portfolio';
 import Contact from '@/components/Contact';
 import FloatingPhotoGallery from '@/components/FloatingPhotoGallery';
@@ -119,9 +119,9 @@ export default function Home() {
                 <About />
               </div>
             </div>
-            <div id="services" className="hud-wrapper">
+            <div id="achievements" className="hud-wrapper">
               <div className="hud-panel">
-                <Services />
+                <Achievements />
               </div>
             </div>
             <div id="portfolio" className="hud-wrapper hud-wrapper-right">
@@ -168,9 +168,9 @@ export default function Home() {
               </motion.div>
             )}
 
-            {activeSection === 'services' && (
+            {activeSection === 'achievements' && (
               <motion.div
-                key="services"
+                key="achievements"
                 initial={{ opacity: 0, x: -50 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -50 }}
@@ -178,7 +178,7 @@ export default function Home() {
                 className="hud-wrapper"
               >
                 <div className="hud-panel">
-                  <Services />
+                  <Achievements />
                 </div>
               </motion.div>
             )}
