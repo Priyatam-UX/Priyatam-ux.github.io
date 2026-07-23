@@ -55,13 +55,14 @@ export default function Navbar({ activeSection, setActiveSection }: NavbarProps)
         <a
           ref={logoRef}
           href="#home"
-          className={styles.logo}
+          className={styles.brand}
           onClick={(e) => {
             e.preventDefault();
             handleLinkClick('home');
           }}
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
+          style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}
         >
           <motion.img 
             src="/images/3d laptop.png" 
@@ -70,6 +71,28 @@ export default function Navbar({ activeSection, setActiveSection }: NavbarProps)
             style={{ rotateX, rotateY }}
             fetchPriority="high"
           />
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            style={{
+              fontWeight: 800,
+              fontSize: '1.2rem',
+              letterSpacing: '1px',
+              color: 'var(--text-color)',
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
+            PRIYATAM
+            <motion.span
+              animate={{ color: ['var(--skin-color)', '#ffffff', 'var(--skin-color)'] }}
+              transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
+              style={{ color: 'var(--skin-color)' }}
+            >
+              .UX
+            </motion.span>
+          </motion.div>
         </a>
 
         {/* Desktop Navigation Links */}

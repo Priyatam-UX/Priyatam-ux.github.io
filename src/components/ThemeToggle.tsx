@@ -42,8 +42,8 @@ export default function ThemeToggle({ currentColor, setCurrentColor }: ThemeTogg
     setIsDark(theme === 'dark');
     document.documentElement.setAttribute('data-theme', theme);
 
-    const savedColor = localStorage.getItem('skin-color') || '#ec1839';
-    const colorObj = colors.find((c) => c.hex === savedColor) || colors[0];
+    const savedColor = localStorage.getItem('skin-color') || '#2196f3';
+    const colorObj = colors.find((c) => c.hex === savedColor) || colors[1];
     setCurrentColor(colorObj.hex);
     document.documentElement.style.setProperty('--skin-color', colorObj.hex);
     document.documentElement.style.setProperty('--skin-glow', colorObj.glow);

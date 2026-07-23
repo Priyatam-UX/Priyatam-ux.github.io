@@ -192,16 +192,16 @@ function Photo3DCard({ src, alt, label, sublabel, index, style }: Photo3DCardPro
 
 const PHOTOS = [
   {
-    src: '/images/convocation.jpg',
-    alt: 'Priyatam receiving degree at LPU Convocation',
-    label: 'Priyatam',
-    sublabel: 'LPU Convocation Ceremony',
-  },
-  {
     src: '/images/speaking.jpg',
     alt: 'Priyatam speaking at BrowserStack StackConnect',
     label: 'Speaker',
     sublabel: 'BrowserStack StackConnect · Bengaluru',
+  },
+  {
+    src: '/images/convocation.jpg',
+    alt: 'Priyatam receiving degree at LPU Convocation',
+    label: 'Priyatam',
+    sublabel: 'LPU Convocation Ceremony',
   },
 ];
 
