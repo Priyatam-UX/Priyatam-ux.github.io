@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import dynamic from 'next/dynamic';
 import { motion, AnimatePresence } from 'framer-motion';
 import Navbar from '@/components/Navbar';
@@ -64,9 +64,13 @@ export default function Home() {
     );
   }
 
+  const handlePreloaderComplete = useCallback(() => {
+    setAppReady(true);
+  }, []);
+
   return (
     <main className="main-wrapper">
-      <Preloader onComplete={() => setAppReady(true)} />
+      <Preloader onComplete={handlePreloaderComplete} />
 
       {/* 3D cosmos planetary flight background */}
       <Canvas3D color={currentColor} activeSection={activeSection} />
