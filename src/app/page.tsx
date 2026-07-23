@@ -90,7 +90,7 @@ export default function Home() {
           {/* Floating Top Navigation */}
           <Navbar activeSection={activeSection} setActiveSection={handleNavigate} />
 
-          {/* ── RIGHT-SIDE FLOATING PHOTO CARDS (only on home, desktop) ── */}
+          {/* ── RIGHT-SIDE FLOATING PHOTO CARDS (Desktop Only) ── */}
           {!isMobile && (
             <AnimatePresence>
               {activeSection === 'home' && (
@@ -128,6 +128,14 @@ export default function Home() {
                     <Hero onNavigate={handleNavigate} skinColor={currentColor} />
                   </div>
                 </motion.div>
+                
+                {/* Mobile Photo Gallery */}
+                <motion.div className="hud-wrapper hud-wrapper-right" style={{ minHeight: '400px' }} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.1 }} transition={{ duration: 0.6, ease: 'easeOut' }}>
+                  <div className="hud-panel" style={{ padding: 0, position: 'relative' }}>
+                    <FloatingPhotoGallery />
+                  </div>
+                </motion.div>
+
                 <motion.div id="about" className="hud-wrapper hud-wrapper-right" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.1 }} transition={{ duration: 0.6, ease: 'easeOut' }}>
                   <div className="hud-panel">
                     <About />
