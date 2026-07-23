@@ -212,7 +212,6 @@ export default function Terminal({ skinColor }: { skinColor: string }) {
             onChange={(e) => setInputValue(e.target.value)}
             className={styles.inputField}
             autoComplete="off"
-            autoFocus
             aria-label="Terminal input"
           />
         </form>
