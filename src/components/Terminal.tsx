@@ -102,11 +102,11 @@ export default function Terminal({ skinColor }: { skinColor: string }) {
           <div>
             <p style={{ color: 'white', marginBottom: 5 }}>Work History:</p>
             <div style={{ marginBottom: 10 }}>
-              <p>🏢 <strong style={{ color: skinColor }}>Arctic Wolf</strong> (Upcoming)</p>
+              <p>🏢 <strong style={{ color: skinColor }}>Arctic Wolf</strong> (July 2026 - Present)</p>
               <p style={{ color: '#c0c0c0', paddingLeft: 15 }}>• Role: Sr. Full Stack Developer - ServiceNow</p>
             </div>
             <div style={{ marginBottom: 10 }}>
-              <p>🏢 <strong style={{ color: skinColor }}>Unisys India PVT LTD</strong> (April 2025 - Present)</p>
+              <p>🏢 <strong style={{ color: skinColor }}>Unisys India PVT LTD</strong> (April 2025 - July 2026)</p>
               <p style={{ color: '#c0c0c0', paddingLeft: 15 }}>• Role: Senior ServiceNow Developer</p>
             </div>
             <div style={{ marginBottom: 10 }}>

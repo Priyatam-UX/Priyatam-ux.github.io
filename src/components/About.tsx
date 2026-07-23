@@ -56,13 +56,13 @@ const education = [
 
 const experience = [
   {
-    date: 'Upcoming',
+    date: 'July 2026 - Present',
     title: 'Sr. Full Stack Developer - ServiceNow',
     company: 'Arctic Wolf',
     desc: 'Upcoming responsibilities.',
   },
   {
-    date: 'April 2025 - Present',
+    date: 'April 2025 - July 2026',
     title: 'Senior ServiceNow Developer',
     company: 'Unisys India PVT LTD',
     desc: 'Delivered enterprise-scale ServiceNow solutions across ITSM and integrations using JavaScript and Glide APIs, improving service efficiency while ensuring scalability, compliance, and high performance. Integrated ServiceNow with enterprise platforms (Azure AD, external systems) using REST/SOAP APIs. Led development of complex Service Catalog solutions and workflow automations, reducing manual effort by 40%. Implemented core ITSM modules and contributed to platform architecture discussions.',
