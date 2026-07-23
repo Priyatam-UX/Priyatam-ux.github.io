@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import TiltCard from './TiltCard';
 
@@ -74,6 +74,13 @@ const projects = [
 
 export default function Portfolio() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [show3D, setShow3D] = useState(false);
+  
+  // Delay mounting heavy WebGL contexts until after navigation animations finish
+  useEffect(() => {
+    const timer = setTimeout(() => setShow3D(true), 800);
+    return () => clearTimeout(timer);
+  }, []);
   
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -116,7 +123,7 @@ export default function Portfolio() {
                 <TiltCard className={`${styles.projectCard} laser-card-content`}>
                   
                   {/* Localized 3D WebGL scenes acting as the card background */}
-                  <Portfolio3DScenes type={project.id} />
+                  {show3D && <Portfolio3DScenes type={project.id} />}
                   
                   <div className={styles.overlay}>
                     <div className={styles.overlayContent}>
