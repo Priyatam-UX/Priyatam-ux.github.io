@@ -2,7 +2,12 @@
 
 import { motion } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
+import { useRef } from 'react';
+import dynamic from 'next/dynamic';
 import TiltCard from './TiltCard';
+
+// Dynamically import the 3D wrapper to avoid SSR issues
+const Portfolio3DWrapper = dynamic(() => import('./Portfolio3DWrapper'), { ssr: false });
 
 function GithubIcon({ size = 20 }: { size?: number }) {
   return (
@@ -30,6 +35,7 @@ const projects = [
     title: 'JobPilot AI',
     github: 'https://github.com/Priyatam-UX/JobPilot-AI',
     live: 'https://jobspilotai.space/',
+    themeColor: '#1e3a8a',
     image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=800&auto=format&fit=crop',
     tags: ['Python', 'FastAPI', 'React', 'Neon DB', 'LangGraph'],
     description: 'Enterprise AI-powered job application assistant automating search discovery, ATS optimization, and multi-agent workflows.',
@@ -39,6 +45,7 @@ const projects = [
     title: 'StadiumPilot AI',
     github: 'https://github.com/Priyatam-UX/StadiumPilotBot',
     live: 'https://stadiumpilot-bot.vercel.app/',
+    themeColor: '#7e22ce',
     image: 'https://images.unsplash.com/photo-1489944440615-453fc2b6a9a9?q=80&w=800&auto=format&fit=crop',
     tags: ['JavaScript', 'React', 'SVG Anim', 'Gemini 1.5'],
     description: 'AI command center and decision-support platform for large-scale tournament venues integrating live telemetry and Gemini AI.',
@@ -48,6 +55,7 @@ const projects = [
     title: 'MonsoonShield AI',
     github: 'https://github.com/Priyatam-UX/MonsoonShield-AI',
     live: 'https://monsoon-shield-ai.vercel.app/',
+    themeColor: '#047857',
     image: 'https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?q=80&w=800&auto=format&fit=crop',
     tags: ['TypeScript', 'Tailwind v4', 'PWA', 'Gemini Vision'],
     description: 'Preparedness and citizen assistance platform with real-time risk evaluations, offline PWA access, and AI safety overlays.',
@@ -57,6 +65,7 @@ const projects = [
     title: 'Personal Cooking Planner',
     github: 'https://github.com/Priyatam-UX/Personal-Cooking-Planner',
     live: 'https://personal-cooking-planner.vercel.app/',
+    themeColor: '#ea580c',
     image: 'https://images.unsplash.com/photo-1556910103-1c02745aae4f?q=80&w=800&auto=format&fit=crop',
     tags: ['JavaScript', 'Gemini API', 'Glassmorphism'],
     description: 'Client-side AI micro-app to generate custom daily cooking plans tailored to budget, diet, and existing pantry ingredients.',
@@ -64,6 +73,8 @@ const projects = [
 ];
 
 export default function Portfolio() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -82,7 +93,7 @@ export default function Portfolio() {
   } as const;
 
   return (
-    <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}>
+    <div ref={containerRef} style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', position: 'relative' }}>
       <div className="section-title">
         <h2>Portfolio</h2>
       </div>
@@ -101,14 +112,20 @@ export default function Portfolio() {
         >
           {projects.map((project, index) => (
             <motion.div key={index} variants={itemVariants}>
-              <div className="laser-card" style={{ height: '100%' }}>
+              <div className="laser-card" style={{ height: '100%', position: 'relative' }}>
                 <TiltCard className={`${styles.projectCard} laser-card-content`}>
+                  
+                  {/* Global View port renders inside here */}
+                  <Portfolio3DWrapper type={project.id} color={project.themeColor} eventSource={containerRef} />
+                  
                   <div className={styles.imgWrapper}>
+                    {/* Fallback image with heavy opacity drop to allow 3D to shine through */}
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={project.image}
                       alt={project.title}
                       className={styles.projectImg}
+                      style={{ opacity: 0.2 }}
                     />
                     <div className={styles.overlay}>
                       <div className={styles.overlayContent}>
