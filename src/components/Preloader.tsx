@@ -39,12 +39,16 @@ export default function Preloader({ onComplete }: { onComplete?: () => void }) {
         clearInterval(timer);
         setTimeout(() => {
           setIsLoading(false);
+          // Wait exactly the length of the exit animation (800ms) before triggering onComplete
+          setTimeout(() => {
+            onComplete?.();
+          }, 800);
         }, 600); // Wait a tiny bit at 100% before fading out
       }
     }, intervalTime);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [onComplete]);
 
   return (
     <AnimatePresence>
@@ -54,11 +58,6 @@ export default function Preloader({ onComplete }: { onComplete?: () => void }) {
           initial={{ opacity: 1 }}
           exit={{ opacity: 0, scale: 1.05 }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          onAnimationComplete={(definition) => {
-            if (definition === 'exit' || !isLoading) {
-              onComplete?.();
-            }
-          }}
           style={{
             position: 'fixed',
             inset: 0,
