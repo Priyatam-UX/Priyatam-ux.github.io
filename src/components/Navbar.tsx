@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { motion, AnimatePresence, useScroll } from 'framer-motion';
+import { useState, useRef } from 'react';
+import { motion, AnimatePresence, useScroll, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { Home, User, List, Briefcase, Phone, Globe, Menu, X } from 'lucide-react';
 import styles from './Navbar.module.css';
 
@@ -13,6 +13,27 @@ interface NavbarProps {
 export default function Navbar({ activeSection, setActiveSection }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const { scrollYProgress } = useScroll();
+
+  // 3D Tilt Logic for Avatar Logo
+  const logoRef = useRef<HTMLAnchorElement>(null);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const mouseXSpring = useSpring(x, { stiffness: 150, damping: 15 });
+  const mouseYSpring = useSpring(y, { stiffness: 150, damping: 15 });
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ['25deg', '-25deg']);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ['-25deg', '25deg']);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (!logoRef.current) return;
+    const rect = logoRef.current.getBoundingClientRect();
+    x.set((e.clientX - rect.left) / rect.width - 0.5);
+    y.set((e.clientY - rect.top) / rect.height - 0.5);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
 
   const navItems = [
     { id: 'home', label: 'Home', icon: Home },
@@ -32,15 +53,22 @@ export default function Navbar({ activeSection, setActiveSection }: NavbarProps)
       <div className={styles.navContainer}>
         {/* Logo */}
         <a
+          ref={logoRef}
           href="#home"
           className={styles.logo}
           onClick={(e) => {
             e.preventDefault();
             handleLinkClick('home');
           }}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
         >
-          <img src="/images/anime_avatar.jpg" alt="Priyatam 3D Anime Avatar" className={styles.avatarImage} />
-          <div><span>P</span>ortfolio</div>
+          <motion.img 
+            src="/images/3d laptop.png" 
+            alt="3D Developer Avatar" 
+            className={styles.avatarImage} 
+            style={{ rotateX, rotateY }}
+          />
         </a>
 
         {/* Desktop Navigation Links */}
