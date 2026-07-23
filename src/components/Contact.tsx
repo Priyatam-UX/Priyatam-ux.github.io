@@ -29,7 +29,7 @@ import TiltCard from './TiltCard';
 import styles from './Contact.module.css';
 
 const contactInfo = [
-  { icon: Phone, label: 'Call Us On', value: '+91 6284079765', href: 'tel:+916284079765' },
+  { icon: Phone, label: 'Phone', value: '+91 6284079765', href: 'tel:+916284079765' },
   { icon: MapPin, label: 'Location', value: 'Bangalore, India', href: null },
   { icon: Mail, label: 'Email', value: 'pritu2478@gmail.com', href: 'mailto:pritu2478@gmail.com' },
   {
@@ -123,8 +123,8 @@ export default function Contact() {
           className={styles.contactContent}
         >
           <div className={styles.introHeaders}>
-            <h3 className={styles.contactTitle}>Have You Any Questions?</h3>
-            <h4 className={styles.contactSubTitle}>I'm At Your Service</h4>
+            <h3 className={styles.contactTitle}>Want To Connect?</h3>
+            <h4 className={styles.contactSubTitle}>Let's Build Something Amazing</h4>
           </div>
 
           {/* Info cards row */}
@@ -156,7 +156,7 @@ export default function Contact() {
           </div>
 
           <div className={styles.formSection}>
-            <h3 className={styles.formTitle}>Interested in working together? Fill out the form</h3>
+            <h3 className={styles.formTitle}>Interested in working together? Send me a message!</h3>
             <h4 className={styles.formSubTitle}>Get In Touch</h4>
 
             {/* Form */}
