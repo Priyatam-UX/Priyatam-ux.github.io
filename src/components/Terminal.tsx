@@ -23,10 +23,10 @@ export default function Terminal({ skinColor }: { skinColor: string }) {
     if (inputRef.current) inputRef.current.focus();
   };
 
-  // Scroll to bottom of terminal when history changes
+  // Scroll to bottom of terminal when new commands are added
   useEffect(() => {
-    if (terminalEndRef.current) {
-      terminalEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    if (terminalEndRef.current && history.length > 1) {
+      terminalEndRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
   }, [history]);
 
