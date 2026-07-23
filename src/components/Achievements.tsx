@@ -1,46 +1,58 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Award, Trophy, ShieldCheck, Star, Target, Zap } from 'lucide-react';
+import { Award, Trophy, Star, Target, Code, Flame, Bot, Globe } from 'lucide-react';
 import TiltCard from './TiltCard';
 import styles from './Services.module.css'; // Keep using the same CSS module name for ease, or I'll create Achievements.module.css
 
 const achievements = [
   {
-    icon: ShieldCheck,
-    title: 'ServiceNow CSA',
-    date: '2022',
-    desc: 'Certified System Administrator. Mastered core configuration, administration, and implementation of ServiceNow platform capabilities.',
-  },
-  {
-    icon: Target,
-    title: 'ServiceNow CAD',
-    date: '2023',
-    desc: 'Certified Application Developer. Demonstrated expertise in designing, building, and deploying custom applications on the Now Platform.',
-  },
-  {
     icon: Trophy,
-    title: 'Sony Hackathon',
-    date: '2021',
-    desc: 'Top Innovator Award. Built and deployed a scalable Deep Learning pipeline using Python, AWS, and Sony Neural Network Libraries.',
+    title: 'Smart India Hackathon',
+    date: '2019',
+    desc: 'Grand Finale Participant in one of the world\'s largest open innovation models.',
   },
   {
     icon: Star,
-    title: 'InMorphis Excellence',
-    date: '2023',
-    desc: 'Recognized for outstanding delivery of complex API integrations and automating business-critical processes with 100% accuracy.',
+    title: 'InterviewBit Top Scorer',
+    date: 'LPU',
+    desc: 'Top Scorer with 40,000+ points on the competitive programming platform from LPU University.',
   },
   {
-    icon: Zap,
-    title: 'Open Source Contributor',
-    date: 'Ongoing',
-    desc: 'Active contributor to multiple open-source repositories focusing on modern web development, UI/UX libraries, and developer tools.',
+    icon: Code,
+    title: 'CodeNcounter 4.0',
+    date: 'Finalist',
+    desc: 'Finalist in the CodeNcounter 4.0 competitive programming competition.',
   },
   {
     icon: Award,
-    title: 'LPU Hackathon',
-    date: '2019',
-    desc: 'First Place Winner. Developed a full-stack emergency response tracking application under a 24-hour deadline.',
+    title: 'Campus Coding Contests',
+    date: 'Winner',
+    desc: 'Winner of 4+ campus-level coding and algorithmic problem-solving contests.',
+  },
+  {
+    icon: Target,
+    title: 'Microsoft FutureX Hackathon',
+    date: 'Finalist',
+    desc: 'Finalist in the Microsoft FutureX Hackathon organized by UpGrad.',
+  },
+  {
+    icon: Flame,
+    title: 'National Hackathons',
+    date: '10+ Events',
+    desc: 'Actively participated in over 10 national-level hackathons, building diverse and innovative solutions.',
+  },
+  {
+    icon: Bot,
+    title: 'Google Build With AI',
+    date: 'Runner Up',
+    desc: 'Runner Up in the Google / Promptwars Build With AI Hackathon.',
+  },
+  {
+    icon: Globe,
+    title: 'Browser-Use Hackathon',
+    date: 'Runner Up',
+    desc: 'Runner Up in the Browser-Use Hackathon: Go-To-Market (GTM) Edition.',
   },
 ];
 
