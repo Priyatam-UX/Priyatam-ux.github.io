@@ -60,21 +60,66 @@ export default function Preloader({ onComplete }: { onComplete?: () => void }) {
             position: 'fixed',
             inset: 0,
             zIndex: 9999,
-            backgroundColor: 'rgba(2, 2, 8, 0.55)',
-            backdropFilter: 'blur(12px)',
-            WebkitBackdropFilter: 'blur(12px)',
+            backgroundColor: '#020208',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'center',
             color: 'var(--skin-color)',
             fontFamily: 'var(--font-mono), monospace',
+            overflow: 'hidden',
           }}
         >
+          {/* Animated 3D Cyber Core Background */}
+          <div style={{
+            position: 'absolute',
+            inset: 0,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            perspective: '1200px',
+            zIndex: 0,
+            opacity: 0.8
+          }}>
+            {[...Array(6)].map((_, i) => (
+              <motion.div
+                key={`core-${i}`}
+                animate={{
+                  rotateX: [70, 70, 70],
+                  rotateZ: [0, 360],
+                  scale: [1, 1.2, 1],
+                  opacity: [0.1, 0.4, 0.1]
+                }}
+                transition={{
+                  rotateZ: { duration: 15 + i * 5, repeat: Infinity, ease: 'linear' },
+                  scale: { duration: 4 + i, repeat: Infinity, ease: 'easeInOut' },
+                  opacity: { duration: 4 + i, repeat: Infinity, ease: 'easeInOut' }
+                }}
+                style={{
+                  position: 'absolute',
+                  width: `${300 + i * 150}px`,
+                  height: `${300 + i * 150}px`,
+                  border: i % 2 === 0 ? '1px solid var(--skin-color)' : '1px dashed var(--skin-color)',
+                  borderRadius: '50%',
+                  boxShadow: `0 0 ${15 + i * 5}px var(--skin-glow), inset 0 0 ${15 + i * 5}px var(--skin-glow)`,
+                  transformStyle: 'preserve-3d'
+                }}
+              />
+            ))}
+            {/* Atmospheric vignette to blend the edges into darkness */}
+            <div style={{
+              position: 'absolute',
+              inset: 0,
+              background: 'radial-gradient(circle at center, transparent 10%, #020208 75%)',
+              pointerEvents: 'none'
+            }} />
+          </div>
+
           {/* Cyberpunk Scanner Box */}
           <div style={{
             position: 'relative',
             width: '300px',
+            zIndex: 10,
             height: '240px',
             display: 'flex',
             flexDirection: 'column',
