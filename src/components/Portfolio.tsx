@@ -3,7 +3,10 @@
 import { motion } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
 import { useRef } from 'react';
+import dynamic from 'next/dynamic';
 import TiltCard from './TiltCard';
+
+const Portfolio3DScenes = dynamic(() => import('./Portfolio3DScenes'), { ssr: false });
 
 function GithubIcon({ size = 20 }: { size?: number }) {
   return (
@@ -112,18 +115,8 @@ export default function Portfolio() {
               <div className="laser-card" style={{ height: '100%', position: 'relative' }}>
                 <TiltCard className={`${styles.projectCard} laser-card-content`}>
                   
-                  {/* Cyber Scanner and Grid Animations */}
-                  <div className={styles.techGrid}></div>
-                  <div className={styles.cyberScanner} style={{ '--skin-color': project.themeColor } as React.CSSProperties}></div>
-                  
-                  <div className={styles.imgWrapper}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className={styles.projectImg}
-                    />
-                  </div>
+                  {/* Localized 3D WebGL scenes acting as the card background */}
+                  <Portfolio3DScenes type={project.id} />
                   
                   <div className={styles.overlay}>
                     <div className={styles.overlayContent}>

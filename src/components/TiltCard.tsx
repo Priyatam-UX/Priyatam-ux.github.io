@@ -78,7 +78,7 @@ export default function TiltCard({ children, className = '', style = {} }: TiltC
           transition: 'opacity 0.3s ease',
         }}
       />
-      <div style={{ transform: 'translateZ(15px)', zIndex: 2, position: 'relative' }}>
+      <div style={{ transform: 'translateZ(15px)', zIndex: 2, position: 'relative', width: '100%', height: '100%' }}>
         {children}
       </div>
     </motion.div>
