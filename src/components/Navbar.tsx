@@ -39,7 +39,8 @@ export default function Navbar({ activeSection, setActiveSection }: NavbarProps)
             handleLinkClick('home');
           }}
         >
-          <span>P</span>ortfolio
+          <img src="/images/anime_avatar.jpg" alt="Priyatam 3D Anime Avatar" className={styles.avatarImage} />
+          <div><span>P</span>ortfolio</div>
         </a>
 
         {/* Desktop Navigation Links */}
