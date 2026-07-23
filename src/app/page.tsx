@@ -121,33 +121,33 @@ export default function Home() {
           {/* ── RESPONSIVE LAYOUT ROUTER ── */}
           <div className="interactive-content">
             {isMobile ? (
-              /* Mobile View: Stack sections sequentially */
-              <div style={{ padding: '80px 0 20px 0' }}>
-                <div id="home" className="hud-wrapper">
+              /* Mobile View: Stack sections sequentially with scroll reveal */
+              <div style={{ padding: '80px 0 20px 0', display: 'flex', flexDirection: 'column', gap: '30px' }}>
+                <motion.div id="home" className="hud-wrapper" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.1 }} transition={{ duration: 0.6, ease: 'easeOut' }}>
                   <div className="hud-panel">
                     <Hero onNavigate={handleNavigate} skinColor={currentColor} />
                   </div>
-                </div>
-                <div id="about" className="hud-wrapper hud-wrapper-right">
+                </motion.div>
+                <motion.div id="about" className="hud-wrapper hud-wrapper-right" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.1 }} transition={{ duration: 0.6, ease: 'easeOut' }}>
                   <div className="hud-panel">
                     <About />
                   </div>
-                </div>
-                <div id="achievements" className="hud-wrapper">
+                </motion.div>
+                <motion.div id="achievements" className="hud-wrapper" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.1 }} transition={{ duration: 0.6, ease: 'easeOut' }}>
                   <div className="hud-panel">
                     <Achievements />
                   </div>
-                </div>
-                <div id="portfolio" className="hud-wrapper hud-wrapper-right">
+                </motion.div>
+                <motion.div id="portfolio" className="hud-wrapper hud-wrapper-right" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.1 }} transition={{ duration: 0.6, ease: 'easeOut' }}>
                   <div className="hud-panel">
                     <Portfolio />
                   </div>
-                </div>
-                <div id="contact" className="hud-wrapper">
+                </motion.div>
+                <motion.div id="contact" className="hud-wrapper" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.1 }} transition={{ duration: 0.6, ease: 'easeOut' }}>
                   <div className="hud-panel">
                     <Contact />
                   </div>
-                </div>
+                </motion.div>
               </div>
             ) : (
               /* Desktop View: Cinematic 3D HUD Panels */

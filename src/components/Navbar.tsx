@@ -68,6 +68,7 @@ export default function Navbar({ activeSection, setActiveSection }: NavbarProps)
             alt="3D Developer Avatar" 
             className={styles.avatarImage} 
             style={{ rotateX, rotateY }}
+            fetchPriority="high"
           />
         </a>
 

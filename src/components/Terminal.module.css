@@ -144,3 +144,21 @@
   border-color: var(--skin-color);
   box-shadow: 0 0 10px var(--skin-glow);
 }
+
+@media (max-width: 767px) {
+  .terminalWrapper {
+    height: 320px;
+    font-size: 0.75rem;
+  }
+  .body {
+    padding: 15px;
+    gap: 8px;
+  }
+  .chipsContainer {
+    padding: 10px 15px;
+  }
+  .header {
+    height: 30px;
+    padding: 0 10px;
+  }
+}
