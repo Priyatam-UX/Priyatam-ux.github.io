@@ -29,7 +29,7 @@ const projects = [
     title: 'JobPilot AI',
     github: 'https://github.com/Priyatam-UX/JobPilot-AI',
     live: 'https://jobspilotai.space/',
-    bgGradient: 'linear-gradient(45deg, #0f172a, #1e3a8a, #312e81, #0f172a)',
+    themeColor: '#1e3a8a',
     tags: ['Python', 'FastAPI', 'React', 'Neon DB', 'LangGraph'],
     description: 'Enterprise AI-powered job application assistant automating search discovery, ATS optimization, and multi-agent workflows.',
   },
@@ -37,7 +37,7 @@ const projects = [
     title: 'StadiumPilot AI',
     github: 'https://github.com/Priyatam-UX/StadiumPilotBot',
     live: 'https://stadiumpilot-bot.vercel.app/',
-    bgGradient: 'linear-gradient(45deg, #1e1b4b, #4c1d95, #7e22ce, #1e1b4b)',
+    themeColor: '#7e22ce',
     tags: ['JavaScript', 'React', 'SVG Anim', 'Gemini 1.5'],
     description: 'AI command center and decision-support platform for large-scale tournament venues integrating live telemetry and Gemini AI.',
   },
@@ -45,7 +45,7 @@ const projects = [
     title: 'MonsoonShield AI',
     github: 'https://github.com/Priyatam-UX/MonsoonShield-AI',
     live: 'https://monsoon-shield-ai.vercel.app/',
-    bgGradient: 'linear-gradient(45deg, #064e3b, #047857, #0f766e, #064e3b)',
+    themeColor: '#047857',
     tags: ['TypeScript', 'Tailwind v4', 'PWA', 'Gemini Vision'],
     description: 'Preparedness and citizen assistance platform with real-time risk evaluations, offline PWA access, and AI safety overlays.',
   },
@@ -53,11 +53,74 @@ const projects = [
     title: 'Personal Cooking Planner',
     github: 'https://github.com/Priyatam-UX/Personal-Cooking-Planner',
     live: 'https://personal-cooking-planner.vercel.app/',
-    bgGradient: 'linear-gradient(45deg, #7c2d12, #ea580c, #b45309, #7c2d12)',
+    themeColor: '#ea580c',
     tags: ['JavaScript', 'Gemini API', 'Glassmorphism'],
     description: 'Client-side AI micro-app to generate custom daily cooking plans tailored to budget, diet, and existing pantry ingredients.',
   },
 ];
+
+const CyberBackground = ({ color }: { color: string }) => {
+  return (
+    <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', zIndex: 0, borderRadius: '6px', background: '#020208' }}>
+      {/* Animated glowing orbs */}
+      <motion.div
+        animate={{
+          x: ['-20%', '20%', '-20%'],
+          y: ['-20%', '20%', '-20%'],
+          scale: [1, 1.5, 1],
+        }}
+        transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut' }}
+        style={{
+          position: 'absolute',
+          top: '-10%', left: '-10%',
+          width: '70%', height: '70%',
+          background: `radial-gradient(circle, ${color} 0%, transparent 60%)`,
+          opacity: 0.45,
+          filter: 'blur(30px)',
+        }}
+      />
+      <motion.div
+        animate={{
+          x: ['20%', '-20%', '20%'],
+          y: ['20%', '-20%', '20%'],
+          scale: [1.2, 1, 1.2],
+        }}
+        transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
+        style={{
+          position: 'absolute',
+          bottom: '-10%', right: '-10%',
+          width: '70%', height: '70%',
+          background: `radial-gradient(circle, ${color} 0%, transparent 60%)`,
+          opacity: 0.35,
+          filter: 'blur(40px)',
+        }}
+      />
+      
+      {/* Tech Grid overlay */}
+      <div 
+        style={{ 
+          position: 'absolute', inset: 0, 
+          backgroundImage: 'linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)',
+          backgroundSize: '24px 24px',
+          opacity: 0.6
+        }} 
+      />
+      
+      {/* Slow horizontal scanline */}
+      <motion.div
+        animate={{ y: ['-10%', '110%'] }}
+        transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
+        style={{
+          position: 'absolute', top: 0, left: 0, right: 0, height: '2px',
+          background: `linear-gradient(90deg, transparent, ${color}, transparent)`,
+          opacity: 0.8,
+          boxShadow: `0 0 15px ${color}`
+        }}
+      />
+    </div>
+  );
+};
+
 
 export default function Portfolio() {
   const containerVariants = {
@@ -99,17 +162,19 @@ export default function Portfolio() {
             <motion.div key={index} variants={itemVariants}>
               <div className="laser-card" style={{ height: '100%' }}>
                 <TiltCard className={`${styles.projectCard} laser-card-content`}>
+                  <CyberBackground color={project.themeColor} />
                   <div 
-                    className={styles.animatedBg}
                     style={{ 
-
+                      position: 'relative',
+                      zIndex: 1,
                       width: '100%', 
                       height: '100%', 
-                      background: project.bgGradient,
                       display: 'flex',
                       flexDirection: 'column',
                       justifyContent: 'center',
-                      padding: '25px'
+                      padding: '25px',
+                      background: 'linear-gradient(to bottom, rgba(2, 2, 8, 0.4), rgba(2, 2, 8, 0.7))',
+                      borderRadius: '6px'
                     }}
                   >
                     <h4 className={styles.projTitle}>{project.title}</h4>
