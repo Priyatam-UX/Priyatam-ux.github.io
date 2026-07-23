@@ -25,11 +25,11 @@ export default function Home() {
 
   useEffect(() => {
     setMounted(true);
-    // Preloader takes 4000ms to hit 100%, waits 600ms, then starts fading.
-    // Trigger appReady at exactly 4600ms so UI elements animate in right as the preloader fades.
+    // Preloader takes 4000ms to hit 100%, waits 600ms, then starts fading (takes 800ms).
+    // Trigger appReady at 5200ms so the UI elements animate in only AFTER the preloader is almost entirely gone, for a clean cinematic landing.
     const timer = setTimeout(() => {
       setAppReady(true);
-    }, 4600);
+    }, 5200);
     return () => clearTimeout(timer);
   }, []);
 
