@@ -7,7 +7,7 @@ import styles from './About.module.css';
 
 const personalInfo = [
   { icon: Calendar, label: 'Birthday', value: '08 Dec 1999' },
-  { icon: Award, label: 'Age', value: `${new Date().getFullYear() - 1999}` },
+  { icon: Award, label: 'Age', value: '26' },
   { icon: GraduationCap, label: 'Degree', value: 'B.Tech CSE Hons' },
   { icon: Briefcase, label: 'Freelance', value: 'Available' },
   { icon: Phone, label: 'Phone', value: '+91 6284079765' },
