@@ -21,9 +21,15 @@ export default function Home() {
   const [currentColor, setCurrentColor] = useState('#06b6d4');
   const [isMobile, setIsMobile] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [appReady, setAppReady] = useState(false);
 
   useEffect(() => {
     setMounted(true);
+    // Preloader takes 4000ms + 600ms fadeout. Wait 4200ms before mounting UI so it animates in smoothly during the fadeout.
+    const timer = setTimeout(() => {
+      setAppReady(true);
+    }, 4200);
+    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
@@ -70,151 +76,155 @@ export default function Home() {
       {/* Ambient cursor glow */}
       <CursorGlow />
 
-      {/* Floating Theme Controller (bottom-right) */}
-      <ThemeToggle currentColor={currentColor} setCurrentColor={setCurrentColor} />
+      {appReady && (
+        <>
+          {/* Floating Theme Controller (bottom-right) */}
+          <ThemeToggle currentColor={currentColor} setCurrentColor={setCurrentColor} />
 
-      {/* Floating Top Navigation */}
-      <Navbar activeSection={activeSection} setActiveSection={handleNavigate} />
+          {/* Floating Top Navigation */}
+          <Navbar activeSection={activeSection} setActiveSection={handleNavigate} />
 
-      {/* ── RIGHT-SIDE FLOATING PHOTO CARDS (only on home, desktop) ── */}
-      {!isMobile && (
-        <AnimatePresence>
-          {activeSection === 'home' && (
-            <motion.div
-              key="photo-gallery"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              transition={{ duration: 0.5, ease: 'easeOut' }}
-              style={{
-                position: 'fixed',
-                // Sits in the right half, vertically centered
-                top: '50%',
-                left: '58%',
-                transform: 'translate(0, -50%)',
-                width: 380,
-                height: 440,
-                zIndex: 12,
-                pointerEvents: 'auto',
-              }}
-            >
-              <FloatingPhotoGallery />
-            </motion.div>
+          {/* ── RIGHT-SIDE FLOATING PHOTO CARDS (only on home, desktop) ── */}
+          {!isMobile && (
+            <AnimatePresence>
+              {activeSection === 'home' && (
+                <motion.div
+                  key="photo-gallery"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  transition={{ duration: 0.5, ease: 'easeOut' }}
+                  style={{
+                    position: 'fixed',
+                    // Sits in the right half, vertically centered
+                    top: '50%',
+                    left: '58%',
+                    transform: 'translate(0, -50%)',
+                    width: 380,
+                    height: 440,
+                    zIndex: 12,
+                    pointerEvents: 'auto',
+                  }}
+                >
+                  <FloatingPhotoGallery />
+                </motion.div>
+              )}
+            </AnimatePresence>
           )}
-        </AnimatePresence>
-      )}
 
-      {/* ── RESPONSIVE LAYOUT ROUTER ── */}
-      <div className="interactive-content">
-        {isMobile ? (
-          /* Mobile View: Stack sections sequentially */
-          <div style={{ padding: '80px 0 20px 0' }}>
-            <div id="home" className="hud-wrapper">
-              <div className="hud-panel">
-                <Hero onNavigate={handleNavigate} skinColor={currentColor} />
+          {/* ── RESPONSIVE LAYOUT ROUTER ── */}
+          <div className="interactive-content">
+            {isMobile ? (
+              /* Mobile View: Stack sections sequentially */
+              <div style={{ padding: '80px 0 20px 0' }}>
+                <div id="home" className="hud-wrapper">
+                  <div className="hud-panel">
+                    <Hero onNavigate={handleNavigate} skinColor={currentColor} />
+                  </div>
+                </div>
+                <div id="about" className="hud-wrapper hud-wrapper-right">
+                  <div className="hud-panel">
+                    <About />
+                  </div>
+                </div>
+                <div id="achievements" className="hud-wrapper">
+                  <div className="hud-panel">
+                    <Achievements />
+                  </div>
+                </div>
+                <div id="portfolio" className="hud-wrapper hud-wrapper-right">
+                  <div className="hud-panel">
+                    <Portfolio />
+                  </div>
+                </div>
+                <div id="contact" className="hud-wrapper">
+                  <div className="hud-panel">
+                    <Contact />
+                  </div>
+                </div>
               </div>
-            </div>
-            <div id="about" className="hud-wrapper hud-wrapper-right">
-              <div className="hud-panel">
-                <About />
-              </div>
-            </div>
-            <div id="achievements" className="hud-wrapper">
-              <div className="hud-panel">
-                <Achievements />
-              </div>
-            </div>
-            <div id="portfolio" className="hud-wrapper hud-wrapper-right">
-              <div className="hud-panel">
-                <Portfolio />
-              </div>
-            </div>
-            <div id="contact" className="hud-wrapper">
-              <div className="hud-panel">
-                <Contact />
-              </div>
-            </div>
+            ) : (
+              /* Desktop View: Cinematic 3D HUD Panels */
+              <AnimatePresence mode="wait">
+                {activeSection === 'home' && (
+                  <motion.div
+                    key="home"
+                    initial={{ opacity: 0, x: -50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -50 }}
+                    transition={transitionConfig}
+                    className="hud-wrapper"
+                  >
+                    <div className="hud-panel">
+                      <Hero onNavigate={handleNavigate} skinColor={currentColor} />
+                    </div>
+                  </motion.div>
+                )}
+
+                {activeSection === 'about' && (
+                  <motion.div
+                    key="about"
+                    initial={{ opacity: 0, x: 50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 50 }}
+                    transition={transitionConfig}
+                    className="hud-wrapper hud-wrapper-right"
+                  >
+                    <div className="hud-panel">
+                      <About />
+                    </div>
+                  </motion.div>
+                )}
+
+                {activeSection === 'achievements' && (
+                  <motion.div
+                    key="achievements"
+                    initial={{ opacity: 0, x: -50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -50 }}
+                    transition={transitionConfig}
+                    className="hud-wrapper"
+                  >
+                    <div className="hud-panel">
+                      <Achievements />
+                    </div>
+                  </motion.div>
+                )}
+
+                {activeSection === 'portfolio' && (
+                  <motion.div
+                    key="portfolio"
+                    initial={{ opacity: 0, x: 50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 50 }}
+                    transition={transitionConfig}
+                    className="hud-wrapper hud-wrapper-right"
+                  >
+                    <div className="hud-panel">
+                      <Portfolio />
+                    </div>
+                  </motion.div>
+                )}
+
+                {activeSection === 'contact' && (
+                  <motion.div
+                    key="contact"
+                    initial={{ opacity: 0, x: -50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -50 }}
+                    transition={transitionConfig}
+                    className="hud-wrapper"
+                  >
+                    <div className="hud-panel">
+                      <Contact />
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            )}
           </div>
-        ) : (
-          /* Desktop View: Cinematic 3D HUD Panels */
-          <AnimatePresence mode="wait">
-            {activeSection === 'home' && (
-              <motion.div
-                key="home"
-                initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -50 }}
-                transition={transitionConfig}
-                className="hud-wrapper"
-              >
-                <div className="hud-panel">
-                  <Hero onNavigate={handleNavigate} skinColor={currentColor} />
-                </div>
-              </motion.div>
-            )}
-
-            {activeSection === 'about' && (
-              <motion.div
-                key="about"
-                initial={{ opacity: 0, x: 50 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 50 }}
-                transition={transitionConfig}
-                className="hud-wrapper hud-wrapper-right"
-              >
-                <div className="hud-panel">
-                  <About />
-                </div>
-              </motion.div>
-            )}
-
-            {activeSection === 'achievements' && (
-              <motion.div
-                key="achievements"
-                initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -50 }}
-                transition={transitionConfig}
-                className="hud-wrapper"
-              >
-                <div className="hud-panel">
-                  <Achievements />
-                </div>
-              </motion.div>
-            )}
-
-            {activeSection === 'portfolio' && (
-              <motion.div
-                key="portfolio"
-                initial={{ opacity: 0, x: 50 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 50 }}
-                transition={transitionConfig}
-                className="hud-wrapper hud-wrapper-right"
-              >
-                <div className="hud-panel">
-                  <Portfolio />
-                </div>
-              </motion.div>
-            )}
-
-            {activeSection === 'contact' && (
-              <motion.div
-                key="contact"
-                initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -50 }}
-                transition={transitionConfig}
-                className="hud-wrapper"
-              >
-                <div className="hud-panel">
-                  <Contact />
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        )}
-      </div>
+        </>
+      )}
     </main>
   );
 }
