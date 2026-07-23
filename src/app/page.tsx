@@ -24,6 +24,10 @@ export default function Home() {
   const [mounted, setMounted] = useState(false);
   const [appReady, setAppReady] = useState(false);
 
+  const handlePreloaderComplete = useCallback(() => {
+    setAppReady(true);
+  }, []);
+
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -63,10 +67,6 @@ export default function Home() {
       </main>
     );
   }
-
-  const handlePreloaderComplete = useCallback(() => {
-    setAppReady(true);
-  }, []);
 
   return (
     <main className="main-wrapper">
