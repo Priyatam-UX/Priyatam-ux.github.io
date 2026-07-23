@@ -27,6 +27,8 @@ export const metadata: Metadata = {
   authors: [{ name: "Priyatam" }],
 };
 
+import Preloader from "@/components/Preloader";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -35,6 +37,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${syne.variable} ${firaCode.variable} ${inter.variable} scanlines`}>
       <body>
+        <Preloader />
         {children}
       </body>
     </html>
