@@ -25,10 +25,11 @@ export default function Home() {
 
   useEffect(() => {
     setMounted(true);
-    // Preloader takes 4000ms + 600ms fadeout. Wait 4200ms before mounting UI so it animates in smoothly during the fadeout.
+    // Preloader takes 4000ms to hit 100%, waits 600ms, then starts fading.
+    // Trigger appReady at exactly 4600ms so UI elements animate in right as the preloader fades.
     const timer = setTimeout(() => {
       setAppReady(true);
-    }, 4200);
+    }, 4600);
     return () => clearTimeout(timer);
   }, []);
 
@@ -77,7 +78,12 @@ export default function Home() {
       <CursorGlow />
 
       {appReady && (
-        <>
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }} // very smooth custom ease
+          style={{ width: '100%', height: '100%' }}
+        >
           {/* Floating Theme Controller (bottom-right) */}
           <ThemeToggle currentColor={currentColor} setCurrentColor={setCurrentColor} />
 
@@ -223,7 +229,7 @@ export default function Home() {
               </AnimatePresence>
             )}
           </div>
-        </>
+        </motion.div>
       )}
     </main>
   );
