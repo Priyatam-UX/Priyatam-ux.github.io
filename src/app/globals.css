@@ -8,6 +8,10 @@
   list-style: none;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 :root {
   /* Cyberpunk Universe Dark Theme */
   --bg-color: #020208;
