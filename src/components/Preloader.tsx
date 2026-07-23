@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Canvas } from '@react-three/fiber';
+import { Float } from '@react-three/drei';
 
 export default function Preloader({ onComplete }: { onComplete?: () => void }) {
   const [progress, setProgress] = useState(0);
@@ -70,49 +72,39 @@ export default function Preloader({ onComplete }: { onComplete?: () => void }) {
             overflow: 'hidden',
           }}
         >
-          {/* Animated 3D Cyber Core Background */}
+          {/* Genuine 3D WebGL Background for Preloader */}
           <div style={{
             position: 'absolute',
             inset: 0,
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            perspective: '1200px',
             zIndex: 0,
-            opacity: 0.8
+            opacity: 0.6
           }}>
-            {[...Array(6)].map((_, i) => (
-              <motion.div
-                key={`core-${i}`}
-                animate={{
-                  rotateX: [70, 70, 70],
-                  rotateZ: [0, 360],
-                  scale: [1, 1.2, 1],
-                  opacity: [0.1, 0.4, 0.1]
-                }}
-                transition={{
-                  rotateZ: { duration: 15 + i * 5, repeat: Infinity, ease: 'linear' },
-                  scale: { duration: 4 + i, repeat: Infinity, ease: 'easeInOut' },
-                  opacity: { duration: 4 + i, repeat: Infinity, ease: 'easeInOut' }
-                }}
-                style={{
-                  position: 'absolute',
-                  width: `${300 + i * 150}px`,
-                  height: `${300 + i * 150}px`,
-                  border: i % 2 === 0 ? '1px solid var(--skin-color)' : '1px dashed var(--skin-color)',
-                  borderRadius: '50%',
-                  boxShadow: `0 0 ${15 + i * 5}px var(--skin-glow), inset 0 0 ${15 + i * 5}px var(--skin-glow)`,
-                  transformStyle: 'preserve-3d'
-                }}
-              />
-            ))}
-            {/* Atmospheric vignette to blend the edges into darkness */}
-            <div style={{
-              position: 'absolute',
-              inset: 0,
-              background: 'radial-gradient(circle at center, transparent 10%, #020208 75%)',
-              pointerEvents: 'none'
-            }} />
+            <Canvas camera={{ position: [0, 0, 8], fov: 45 }}>
+              <ambientLight intensity={0.5} />
+              <pointLight position={[10, 10, 10]} intensity={1} color="var(--skin-color)" />
+              <Float speed={2} rotationIntensity={2} floatIntensity={2}>
+                <mesh>
+                  <icosahedronGeometry args={[2.5, 1]} />
+                  <meshStandardMaterial 
+                    color="#ffffff" 
+                    wireframe 
+                    transparent 
+                    opacity={0.3} 
+                    emissive="var(--skin-color)"
+                    emissiveIntensity={0.5}
+                  />
+                </mesh>
+                <mesh>
+                  <icosahedronGeometry args={[1.8, 0]} />
+                  <meshStandardMaterial 
+                    color="var(--skin-color)" 
+                    wireframe 
+                    transparent 
+                    opacity={0.8} 
+                  />
+                </mesh>
+              </Float>
+            </Canvas>
           </div>
 
           {/* Cyberpunk Scanner Box */}
