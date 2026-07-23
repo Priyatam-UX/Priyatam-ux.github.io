@@ -4,6 +4,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Float, MeshDistortMaterial, MeshWobbleMaterial, TorusKnot, Sphere, Icosahedron, Stars, Cylinder, Ring, Torus } from '@react-three/drei';
 import * as THREE from 'three';
+import { useInView } from 'framer-motion';
 
 // 1. JobPilot AI: High-tech neural network orb
 function JobPilotScene() {
@@ -145,40 +146,36 @@ function CookingPlannerScene() {
 }
 
 export default function Portfolio3DScenes({ type, index = 0 }: { type: string, index?: number }) {
+  const containerRef = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const isInView = useInView(containerRef, { margin: "200px 0px 200px 0px" });
 
   useEffect(() => {
-    // Detect mobile to avoid exceeding the 4-context WebGL limit which causes "blinking"
-    setIsMobile(window.innerWidth <= 991);
-
-    // Stagger the mounting of each WebGL scene by 400ms per index
-    // This prevents 4 WebGL contexts from compiling shaders at the exact same millisecond
+    // Stagger the initial mounting of each WebGL scene
     const timer = setTimeout(() => {
       setMounted(true);
     }, index * 400);
     return () => clearTimeout(timer);
   }, [index]);
 
-  // Fallback for SSR or mobile WebGL limit
-  if (!mounted || isMobile) return (
-    <div style={{ position: 'absolute', inset: 0, zIndex: 0, borderRadius: '15px', backgroundColor: 'var(--skin-color)', opacity: 0.05 }} />
-  );
-
   return (
-    <div style={{ position: 'absolute', inset: 0, zIndex: 0, borderRadius: '15px', overflow: 'hidden' }}>
-      <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
-        <ambientLight intensity={0.8} />
-        <directionalLight position={[10, 10, 5]} intensity={2} />
-        <pointLight position={[-10, -10, -5]} intensity={1} color="#ffffff" />
-        
-        <Stars radius={15} depth={50} count={2000} factor={4} saturation={0} fade speed={1} />
+    <div ref={containerRef} style={{ position: 'absolute', inset: 0, zIndex: 0, borderRadius: '15px', overflow: 'hidden' }}>
+      {!mounted || !isInView ? (
+        <div style={{ position: 'absolute', inset: 0, backgroundColor: 'var(--skin-color)', opacity: 0.02 }} />
+      ) : (
+        <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
+          <ambientLight intensity={0.8} />
+          <directionalLight position={[10, 10, 5]} intensity={2} />
+          <pointLight position={[-10, -10, -5]} intensity={1} color="#ffffff" />
+          
+          <Stars radius={15} depth={50} count={2000} factor={4} saturation={0} fade speed={1} />
 
-        {type === 'jobpilot' && <JobPilotScene />}
-        {type === 'stadiumpilot' && <StadiumPilotScene />}
-        {type === 'monsoonshield' && <MonsoonShieldScene />}
-        {type === 'cookingplanner' && <CookingPlannerScene />}
-      </Canvas>
+          {type === 'jobpilot' && <JobPilotScene />}
+          {type === 'stadiumpilot' && <StadiumPilotScene />}
+          {type === 'monsoonshield' && <MonsoonShieldScene />}
+          {type === 'cookingplanner' && <CookingPlannerScene />}
+        </Canvas>
+      )}
     </div>
   );
 }
