@@ -1,9 +1,62 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Canvas } from '@react-three/fiber';
+import { Canvas, useFrame } from '@react-three/fiber';
 import { Float } from '@react-three/drei';
+import * as THREE from 'three';
+
+function ParticleVortex() {
+  const pointsRef = useRef<THREE.Points>(null);
+  const count = 3000;
+  
+  const [positions, colors] = useMemo(() => {
+    const pos = new Float32Array(count * 3);
+    const col = new Float32Array(count * 3);
+    const color = new THREE.Color();
+    for (let i = 0; i < count; i++) {
+      const radius = 2 + Math.random() * 6;
+      const angle = Math.random() * Math.PI * 2;
+      const height = (Math.random() - 0.5) * 12;
+      
+      // Swirl shape
+      pos[i * 3] = Math.cos(angle) * radius;
+      pos[i * 3 + 1] = height;
+      pos[i * 3 + 2] = Math.sin(angle) * radius;
+      
+      // Cyan to deep blue/purple gradient based on radius
+      color.setHSL(0.5 + (radius / 15) * 0.4, 0.9, 0.6);
+      col[i * 3] = color.r;
+      col[i * 3 + 1] = color.g;
+      col[i * 3 + 2] = color.b;
+    }
+    return [pos, col];
+  }, []);
+
+  useFrame((state) => {
+    if (pointsRef.current) {
+      pointsRef.current.rotation.y = state.clock.elapsedTime * 0.3;
+      pointsRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.2) * 0.2;
+    }
+  });
+
+  return (
+    <points ref={pointsRef}>
+      <bufferGeometry>
+        <bufferAttribute attach="attributes-position" args={[positions, 3]} />
+        <bufferAttribute attach="attributes-color" args={[colors, 3]} />
+      </bufferGeometry>
+      <pointsMaterial 
+        size={0.06} 
+        vertexColors 
+        transparent 
+        opacity={0.8} 
+        sizeAttenuation 
+        blending={THREE.AdditiveBlending} 
+      />
+    </points>
+  );
+}
 
 export default function Preloader({ onComplete }: { onComplete?: () => void }) {
   const [progress, setProgress] = useState(0);
@@ -79,31 +132,9 @@ export default function Preloader({ onComplete }: { onComplete?: () => void }) {
             zIndex: 0,
             opacity: 0.6
           }}>
-            <Canvas camera={{ position: [0, 0, 8], fov: 45 }}>
+            <Canvas camera={{ position: [0, 0, 10], fov: 45 }}>
               <ambientLight intensity={0.5} />
-              <pointLight position={[10, 10, 10]} intensity={1} color="var(--skin-color)" />
-              <Float speed={2} rotationIntensity={2} floatIntensity={2}>
-                <mesh>
-                  <icosahedronGeometry args={[2.5, 1]} />
-                  <meshStandardMaterial 
-                    color="#ffffff" 
-                    wireframe 
-                    transparent 
-                    opacity={0.3} 
-                    emissive="var(--skin-color)"
-                    emissiveIntensity={0.5}
-                  />
-                </mesh>
-                <mesh>
-                  <icosahedronGeometry args={[1.8, 0]} />
-                  <meshStandardMaterial 
-                    color="var(--skin-color)" 
-                    wireframe 
-                    transparent 
-                    opacity={0.8} 
-                  />
-                </mesh>
-              </Float>
+              <ParticleVortex />
             </Canvas>
           </div>
 
