@@ -55,7 +55,7 @@ export default function Home() {
     }
   };
 
-  const transitionConfig = { duration: 0.4, ease: 'easeOut' } as const;
+  const transitionConfig = { duration: 1.5, ease: [0.22, 1, 0.36, 1] } as const;
 
   if (!mounted) {
     return (
@@ -100,7 +100,7 @@ export default function Home() {
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.8 }}
-                  transition={{ duration: 0.5, ease: 'easeOut' }}
+                  transition={{ duration: 1.8, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
                   style={{
                     position: 'fixed',
                     // Sits in the right half, vertically centered
