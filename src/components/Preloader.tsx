@@ -39,10 +39,8 @@ export default function Preloader({ onComplete }: { onComplete?: () => void }) {
         clearInterval(timer);
         setTimeout(() => {
           setIsLoading(false);
-          // Wait exactly the length of the exit animation (800ms) before triggering onComplete
-          setTimeout(() => {
-            onComplete?.();
-          }, 800);
+          // Trigger onComplete immediately so the main UI smooth-slides in WHILE the preloader fades out, creating a perfect crossfade
+          onComplete?.();
         }, 600); // Wait a tiny bit at 100% before fading out
       }
     }, intervalTime);
