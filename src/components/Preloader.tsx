@@ -1,62 +1,7 @@
 'use client';
 
-import { useState, useEffect, useRef, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { Float } from '@react-three/drei';
-import * as THREE from 'three';
-
-function ParticleVortex() {
-  const pointsRef = useRef<THREE.Points>(null);
-  const count = 3000;
-  
-  const [positions, colors] = useMemo(() => {
-    const pos = new Float32Array(count * 3);
-    const col = new Float32Array(count * 3);
-    const color = new THREE.Color();
-    for (let i = 0; i < count; i++) {
-      const radius = 2 + Math.random() * 6;
-      const angle = Math.random() * Math.PI * 2;
-      const height = (Math.random() - 0.5) * 12;
-      
-      // Swirl shape
-      pos[i * 3] = Math.cos(angle) * radius;
-      pos[i * 3 + 1] = height;
-      pos[i * 3 + 2] = Math.sin(angle) * radius;
-      
-      // Cyan to deep blue/purple gradient based on radius
-      color.setHSL(0.5 + (radius / 15) * 0.4, 0.9, 0.6);
-      col[i * 3] = color.r;
-      col[i * 3 + 1] = color.g;
-      col[i * 3 + 2] = color.b;
-    }
-    return [pos, col];
-  }, []);
-
-  useFrame((state) => {
-    if (pointsRef.current) {
-      pointsRef.current.rotation.y = state.clock.elapsedTime * 0.3;
-      pointsRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.2) * 0.2;
-    }
-  });
-
-  return (
-    <points ref={pointsRef}>
-      <bufferGeometry>
-        <bufferAttribute attach="attributes-position" args={[positions, 3]} />
-        <bufferAttribute attach="attributes-color" args={[colors, 3]} />
-      </bufferGeometry>
-      <pointsMaterial 
-        size={0.06} 
-        vertexColors 
-        transparent 
-        opacity={0.8} 
-        sizeAttenuation 
-        blending={THREE.AdditiveBlending} 
-      />
-    </points>
-  );
-}
 
 export default function Preloader({ onComplete }: { onComplete?: () => void }) {
   const [progress, setProgress] = useState(0);
@@ -115,7 +60,7 @@ export default function Preloader({ onComplete }: { onComplete?: () => void }) {
             position: 'fixed',
             inset: 0,
             zIndex: 9999,
-            backgroundColor: '#020208',
+            backgroundColor: 'transparent',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
@@ -125,19 +70,6 @@ export default function Preloader({ onComplete }: { onComplete?: () => void }) {
             overflow: 'hidden',
           }}
         >
-          {/* Genuine 3D WebGL Background for Preloader */}
-          <div style={{
-            position: 'absolute',
-            inset: 0,
-            zIndex: 0,
-            opacity: 0.6
-          }}>
-            <Canvas camera={{ position: [0, 0, 10], fov: 45 }}>
-              <ambientLight intensity={0.5} />
-              <ParticleVortex />
-            </Canvas>
-          </div>
-
           {/* Cyberpunk Scanner Box */}
           <div style={{
             position: 'relative',
@@ -149,6 +81,10 @@ export default function Preloader({ onComplete }: { onComplete?: () => void }) {
             justifyContent: 'center',
             alignItems: 'center',
             padding: '20px',
+            background: 'rgba(2,2,8,0.7)',
+            backdropFilter: 'blur(10px)',
+            borderRadius: '8px',
+            boxShadow: '0 0 30px rgba(0,0,0,0.8)'
           }}>
             {/* Corner brackets */}
             <div style={{ position: 'absolute', top: 0, left: 0, width: 20, height: 20, borderTop: '2px solid var(--skin-color)', borderLeft: '2px solid var(--skin-color)' }} />
