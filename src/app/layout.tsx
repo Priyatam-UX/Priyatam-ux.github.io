@@ -35,7 +35,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${syne.variable} ${firaCode.variable} ${inter.variable} scanlines`}>
+    <html lang="en" className={`${syne.variable} ${firaCode.variable} ${inter.variable} scanlines`} suppressHydrationWarning>
       <body>
         <Preloader />
         {children}
