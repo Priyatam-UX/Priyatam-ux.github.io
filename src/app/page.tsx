@@ -12,6 +12,7 @@ import Achievements from '@/components/Achievements';
 import Portfolio from '@/components/Portfolio';
 import Contact from '@/components/Contact';
 import FloatingPhotoGallery from '@/components/FloatingPhotoGallery';
+import Preloader from '@/components/Preloader';
 
 // Dynamically import the 3D Canvas with SSR disabled to prevent Node compile errors
 const Canvas3D = dynamic(() => import('@/components/Canvas3D'), { ssr: false });
@@ -25,12 +26,6 @@ export default function Home() {
 
   useEffect(() => {
     setMounted(true);
-    // Preloader takes 4000ms to hit 100%, waits 600ms, then starts fading (takes 800ms).
-    // Trigger appReady at 5200ms so the UI elements animate in only AFTER the preloader is almost entirely gone, for a clean cinematic landing.
-    const timer = setTimeout(() => {
-      setAppReady(true);
-    }, 5200);
-    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
@@ -71,6 +66,8 @@ export default function Home() {
 
   return (
     <main className="main-wrapper">
+      <Preloader onComplete={() => setAppReady(true)} />
+
       {/* 3D cosmos planetary flight background */}
       <Canvas3D color={currentColor} activeSection={activeSection} />
 

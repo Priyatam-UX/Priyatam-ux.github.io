@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-export default function Preloader() {
+export default function Preloader({ onComplete }: { onComplete?: () => void }) {
   const [progress, setProgress] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [textIndex, setTextIndex] = useState(0);
@@ -54,6 +54,11 @@ export default function Preloader() {
           initial={{ opacity: 1 }}
           exit={{ opacity: 0, scale: 1.05 }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          onAnimationComplete={(definition) => {
+            if (definition === 'exit' || !isLoading) {
+              onComplete?.();
+            }
+          }}
           style={{
             position: 'fixed',
             inset: 0,
