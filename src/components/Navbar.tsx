@@ -82,9 +82,21 @@ export default function Navbar({ activeSection, setActiveSection }: NavbarProps)
               color: 'var(--text-color)',
               display: 'flex',
               alignItems: 'center',
+              gap: '2px',
             }}
           >
-            PRIYATAM
+            <motion.span
+              animate={{ 
+                textShadow: [
+                  "0px 0px 0px var(--skin-color)", 
+                  "2px 2px 8px var(--skin-color)", 
+                  "0px 0px 0px var(--skin-color)"
+                ] 
+              }}
+              transition={{ duration: 3, repeat: Infinity }}
+            >
+              PRIYATAM
+            </motion.span>
             <motion.span
               animate={{ color: ['var(--skin-color)', '#ffffff', 'var(--skin-color)'] }}
               transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
@@ -92,6 +104,17 @@ export default function Navbar({ activeSection, setActiveSection }: NavbarProps)
             >
               .UX
             </motion.span>
+            <motion.span
+              animate={{ opacity: [1, 0, 1] }}
+              transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
+              style={{ 
+                display: 'inline-block',
+                width: '8px', 
+                height: '20px', 
+                backgroundColor: 'var(--skin-color)',
+                marginLeft: '4px' 
+              }}
+            />
           </motion.div>
         </a>
 
