@@ -54,8 +54,8 @@ export default function Preloader({ onComplete }: { onComplete?: () => void }) {
         <motion.div
           key="preloader"
           initial={{ opacity: 1 }}
-          exit={{ opacity: 0, scale: 1.05 }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          exit={{ opacity: 0, scale: 1.02, filter: 'blur(10px)' }}
+          transition={{ duration: 1.5, ease: 'easeInOut' }}
           style={{
             position: 'fixed',
             inset: 0,

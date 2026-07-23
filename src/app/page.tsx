@@ -82,7 +82,7 @@ export default function Home() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }} // very smooth custom ease
+          transition={{ duration: 2.5, ease: 'easeInOut' }} // exceptionally smooth, slow fade
           style={{ width: '100%', height: '100%' }}
         >
           {/* Floating Theme Controller (bottom-right) */}
