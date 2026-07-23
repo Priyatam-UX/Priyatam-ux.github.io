@@ -102,14 +102,20 @@ export default function Terminal({ skinColor }: { skinColor: string }) {
           <div>
             <p style={{ color: 'white', marginBottom: 5 }}>Work History:</p>
             <div style={{ marginBottom: 10 }}>
+              <p>🏢 <strong style={{ color: skinColor }}>Arctic Wolf</strong> (Upcoming)</p>
+              <p style={{ color: '#c0c0c0', paddingLeft: 15 }}>• Role: Sr. Full Stack Developer - ServiceNow</p>
+            </div>
+            <div style={{ marginBottom: 10 }}>
+              <p>🏢 <strong style={{ color: skinColor }}>Unisys India PVT LTD</strong> (April 2025 - Present)</p>
+              <p style={{ color: '#c0c0c0', paddingLeft: 15 }}>• Role: Senior ServiceNow Developer</p>
+            </div>
+            <div style={{ marginBottom: 10 }}>
               <p>🏢 <strong style={{ color: skinColor }}>InMorphis</strong> (May 2021 - Present)</p>
               <p style={{ color: '#c0c0c0', paddingLeft: 15 }}>• Role: Software Engineer</p>
-              <p style={{ color: '#a0a0a0', paddingLeft: 15 }}>• Developed 3rd-party REST/SOAP API integrations with ServiceNow.</p>
             </div>
             <div>
               <p>🏢 <strong style={{ color: skinColor }}>Sony Research India</strong> (Nov 2020 - May 2021)</p>
               <p style={{ color: '#c0c0c0', paddingLeft: 15 }}>• Role: Full-Stack Intern</p>
-              <p style={{ color: '#a0a0a0', paddingLeft: 15 }}>• Integrated deep learning models with Python and AWS environments.</p>
             </div>
           </div>
         );
@@ -119,10 +125,10 @@ export default function Terminal({ skinColor }: { skinColor: string }) {
         response = (
           <div>
             <p style={{ color: 'white', marginBottom: 5 }}>Featured Projects:</p>
-            <p>🚀 <a href="https://github.com/Priyatam-UX/Wildfire-Tracker" target="_blank" rel="noopener noreferrer" style={{ color: skinColor, textDecoration: 'underline' }}>Wildfire-Tracker</a> - NASA API Maps interface</p>
-            <p>🚀 <a href="https://github.com/Priyatam-UX/Real-time-pizza-tracker" target="_blank" rel="noopener noreferrer" style={{ color: skinColor, textDecoration: 'underline' }}>Pizza-Tracker</a> - Socket.io live tracking dashboard</p>
-            <p>🚀 <a href="https://github.com/Priyatam-UX/fb-clone" target="_blank" rel="noopener noreferrer" style={{ color: skinColor, textDecoration: 'underline' }}>Facebook-Clone</a> - Firebase context social app</p>
-            <p>🚀 <a href="https://github.com/Priyatam-UX/Face-Recognition-Attendance-System" target="_blank" rel="noopener noreferrer" style={{ color: skinColor, textDecoration: 'underline' }}>Face-Recognition-Attendance</a> - Computer vision system</p>
+            <p>🚀 <a href="https://github.com/Priyatam-UX/JobPilot-AI" target="_blank" rel="noopener noreferrer" style={{ color: skinColor, textDecoration: 'underline' }}>JobPilot AI</a> - Enterprise AI-powered job application assistant</p>
+            <p>🚀 <a href="https://github.com/Priyatam-UX/StadiumPilotBot" target="_blank" rel="noopener noreferrer" style={{ color: skinColor, textDecoration: 'underline' }}>StadiumPilot AI</a> - AI command center for tournament venues</p>
+            <p>🚀 <a href="https://github.com/Priyatam-UX/MonsoonShield-AI" target="_blank" rel="noopener noreferrer" style={{ color: skinColor, textDecoration: 'underline' }}>MonsoonShield AI</a> - Preparedness and citizen assistance platform</p>
+            <p>🚀 <a href="https://github.com/Priyatam-UX/Personal-Cooking-Planner" target="_blank" rel="noopener noreferrer" style={{ color: skinColor, textDecoration: 'underline' }}>Cooking Planner</a> - AI micro-app for custom cooking plans</p>
           </div>
         );
         break;
