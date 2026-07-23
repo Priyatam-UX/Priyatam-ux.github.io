@@ -26,46 +26,36 @@ import styles from './Portfolio.module.css';
 
 const projects = [
   {
-    title: 'Wildfire Tracker',
-    github: 'https://github.com/Priyatam-UX/Wildfire-Tracker',
-    image: '/images/portfolio/wildfire1.jpg',
-    tags: ['React', 'NASA API', 'Google Maps API'],
-    description: 'Real-time wildfire tracker application utilizing NASA API data to plot wildfire events on a Google Maps interface.',
+    title: 'JobPilot AI',
+    github: 'https://github.com/Priyatam-UX/JobPilot-AI',
+    live: 'https://jobspilotai.space/',
+    bgGradient: 'linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%)',
+    tags: ['Python', 'FastAPI', 'React', 'Neon DB', 'LangGraph'],
+    description: 'Enterprise AI-powered job application assistant automating search discovery, ATS optimization, and multi-agent workflows.',
   },
   {
-    title: 'Real-time Pizza Tracker',
-    github: 'https://github.com/Priyatam-UX/Real-time-pizza-tracker',
-    image: '/images/portfolio/pizza1.jpg',
-    tags: ['Node.js', 'Express', 'MongoDB', 'Socket.io'],
-    description: 'A full-stack pizza ordering application featuring a real-time order tracking dashboard driven by web sockets.',
+    title: 'StadiumPilot AI',
+    github: 'https://github.com/Priyatam-UX/StadiumPilotBot',
+    live: 'https://stadiumpilot-bot.vercel.app/',
+    bgGradient: 'linear-gradient(135deg, #1e1b4b 0%, #4c1d95 100%)',
+    tags: ['JavaScript', 'React', 'SVG Anim', 'Gemini 1.5'],
+    description: 'AI command center and decision-support platform for large-scale tournament venues integrating live telemetry and Gemini AI.',
   },
   {
-    title: 'Facebook Clone',
-    github: 'https://github.com/Priyatam-UX/fb-clone',
-    image: '/images/portfolio/fb1.jpg',
-    tags: ['React.js', 'Firebase', 'Context API'],
-    description: 'A social media web app clone featuring Google authentication, real-time post feeds, and media uploads.',
+    title: 'MonsoonShield AI',
+    github: 'https://github.com/Priyatam-UX/MonsoonShield-AI',
+    live: 'https://monsoon-shield-ai.vercel.app/',
+    bgGradient: 'linear-gradient(135deg, #064e3b 0%, #047857 100%)',
+    tags: ['TypeScript', 'Tailwind v4', 'PWA', 'Gemini Vision'],
+    description: 'Preparedness and citizen assistance platform with real-time risk evaluations, offline PWA access, and AI safety overlays.',
   },
   {
-    title: 'Shopping Website',
-    github: 'https://github.com/priyatam-ux/shopping-website',
-    image: '/images/portfolio/shopping.jpg',
-    tags: ['HTML5', 'CSS3', 'JavaScript', 'Bootstrap'],
-    description: 'Responsive frontend e-commerce shopping template showing products catalog, details page, and shopping cart logic.',
-  },
-  {
-    title: 'Travelling Website',
-    github: 'https://github.com/priyatam-ux/Travelling-',
-    image: '/images/portfolio/travel.jpg',
-    tags: ['React.js', 'RWD', 'CSS Modules'],
-    description: 'An elegant frontend travel booking agency concept platform showcasing travel destinations and interactive bookings.',
-  },
-  {
-    title: 'Face Recognition Attendance',
-    github: 'https://github.com/Priyatam-UX/Face-Recognition-Attendance-System',
-    image: '/images/portfolio/facerec.jpg',
-    tags: ['Python', 'OpenCV', 'Face Recognition', 'Tkinter'],
-    description: 'Computer vision desktop app that automates attendance taking using facial recognition models and spreadsheet logging.',
+    title: 'Personal Cooking Planner',
+    github: 'https://github.com/Priyatam-UX/Personal-Cooking-Planner',
+    live: 'https://personal-cooking-planner.vercel.app/',
+    bgGradient: 'linear-gradient(135deg, #7c2d12 0%, #d97706 100%)',
+    tags: ['JavaScript', 'Gemini API', 'Glassmorphism'],
+    description: 'Client-side AI micro-app to generate custom daily cooking plans tailored to budget, diet, and existing pantry ingredients.',
   },
 ];
 
@@ -110,12 +100,8 @@ export default function Portfolio() {
               <div className="laser-card" style={{ height: '100%' }}>
                 <TiltCard className={`${styles.projectCard} laser-card-content`}>
                   <div className={styles.imgWrapper}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className={styles.projectImg}
-                    />
+                    {/* Render gradient background instead of image */}
+                    <div style={{ width: '100%', height: '100%', background: project.bgGradient }} />
                     <div className={styles.overlay}>
                       <div className={styles.overlayContent}>
                         <h4 className={styles.projTitle}>{project.title}</h4>
@@ -140,6 +126,18 @@ export default function Portfolio() {
                             <GithubIcon size={20} />
                             <span>Code</span>
                           </a>
+                          {project.live && (
+                            <a
+                              href={project.live}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className={styles.linkIcon}
+                              aria-label={`Live Demo of ${project.title}`}
+                            >
+                              <ExternalLink size={20} />
+                              <span>Live</span>
+                            </a>
+                          )}
                         </div>
                       </div>
                     </div>
