@@ -2,10 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
-import dynamic from 'next/dynamic';
 import TiltCard from './TiltCard';
-
-const Portfolio3DCanvas = dynamic(() => import('./Portfolio3DCanvas'), { ssr: false });
 
 function GithubIcon({ size = 20 }: { size?: number }) {
   return (
@@ -33,7 +30,7 @@ const projects = [
     title: 'JobPilot AI',
     github: 'https://github.com/Priyatam-UX/JobPilot-AI',
     live: 'https://jobspilotai.space/',
-    themeColor: '#1e3a8a',
+    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=800&auto=format&fit=crop',
     tags: ['Python', 'FastAPI', 'React', 'Neon DB', 'LangGraph'],
     description: 'Enterprise AI-powered job application assistant automating search discovery, ATS optimization, and multi-agent workflows.',
   },
@@ -42,7 +39,7 @@ const projects = [
     title: 'StadiumPilot AI',
     github: 'https://github.com/Priyatam-UX/StadiumPilotBot',
     live: 'https://stadiumpilot-bot.vercel.app/',
-    themeColor: '#7e22ce',
+    image: 'https://images.unsplash.com/photo-1489944440615-453fc2b6a9a9?q=80&w=800&auto=format&fit=crop',
     tags: ['JavaScript', 'React', 'SVG Anim', 'Gemini 1.5'],
     description: 'AI command center and decision-support platform for large-scale tournament venues integrating live telemetry and Gemini AI.',
   },
@@ -51,7 +48,7 @@ const projects = [
     title: 'MonsoonShield AI',
     github: 'https://github.com/Priyatam-UX/MonsoonShield-AI',
     live: 'https://monsoon-shield-ai.vercel.app/',
-    themeColor: '#047857',
+    image: 'https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?q=80&w=800&auto=format&fit=crop',
     tags: ['TypeScript', 'Tailwind v4', 'PWA', 'Gemini Vision'],
     description: 'Preparedness and citizen assistance platform with real-time risk evaluations, offline PWA access, and AI safety overlays.',
   },
@@ -60,7 +57,7 @@ const projects = [
     title: 'Personal Cooking Planner',
     github: 'https://github.com/Priyatam-UX/Personal-Cooking-Planner',
     live: 'https://personal-cooking-planner.vercel.app/',
-    themeColor: '#ea580c',
+    image: 'https://images.unsplash.com/photo-1556910103-1c02745aae4f?q=80&w=800&auto=format&fit=crop',
     tags: ['JavaScript', 'Gemini API', 'Glassmorphism'],
     description: 'Client-side AI micro-app to generate custom daily cooking plans tailored to budget, diet, and existing pantry ingredients.',
   },
@@ -106,55 +103,51 @@ export default function Portfolio() {
             <motion.div key={index} variants={itemVariants}>
               <div className="laser-card" style={{ height: '100%' }}>
                 <TiltCard className={`${styles.projectCard} laser-card-content`}>
-                  <Portfolio3DCanvas type={project.id} color={project.themeColor} />
-                  <div 
-                    style={{ 
-                      position: 'relative',
-                      zIndex: 1,
-                      width: '100%', 
-                      height: '100%', 
-                      display: 'flex',
-                      flexDirection: 'column',
-                      justifyContent: 'center',
-                      padding: '25px',
-                      background: 'linear-gradient(to bottom, rgba(2, 2, 8, 0.4), rgba(2, 2, 8, 0.7))',
-                      borderRadius: '6px'
-                    }}
-                  >
-                    <h4 className={styles.projTitle}>{project.title}</h4>
-                    <p className={styles.projDesc}>{project.description}</p>
-                    
-                    <div className={styles.tags}>
-                      {project.tags.map((tag, tIdx) => (
-                        <span key={tIdx} className={styles.tagPill}>
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
+                  <div className={styles.imgWrapper}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className={styles.projectImg}
+                    />
+                    <div className={styles.overlay}>
+                      <div className={styles.overlayContent}>
+                        <h4 className={styles.projTitle}>{project.title}</h4>
+                        <p className={styles.projDesc}>{project.description}</p>
+                        
+                        <div className={styles.tags}>
+                          {project.tags.map((tag, tIdx) => (
+                            <span key={tIdx} className={styles.tagPill}>
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
 
-                    <div className={styles.links}>
-                      <a
-                        href={project.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={styles.linkIcon}
-                        aria-label={`View code for ${project.title}`}
-                      >
-                        <GithubIcon size={20} />
-                        <span>Code</span>
-                      </a>
-                      {project.live && (
-                        <a
-                          href={project.live}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className={styles.linkIcon}
-                          aria-label={`Live Demo of ${project.title}`}
-                        >
-                          <ExternalLink size={20} />
-                          <span>Live</span>
-                        </a>
-                      )}
+                        <div className={styles.links}>
+                          <a
+                            href={project.github}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={styles.linkIcon}
+                            aria-label={`View code for ${project.title}`}
+                          >
+                            <GithubIcon size={20} />
+                            <span>Code</span>
+                          </a>
+                          {project.live && (
+                            <a
+                              href={project.live}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className={styles.linkIcon}
+                              aria-label={`Live Demo of ${project.title}`}
+                            >
+                              <ExternalLink size={20} />
+                              <span>Live</span>
+                            </a>
+                          )}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </TiltCard>
