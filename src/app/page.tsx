@@ -60,10 +60,9 @@ export default function Home() {
   if (!mounted) {
     return (
       <main className="main-wrapper">
+        <Preloader />
         <Canvas3D color={currentColor} activeSection={activeSection} />
         <CursorGlow />
-        <ThemeToggle currentColor={currentColor} setCurrentColor={setCurrentColor} />
-        <Navbar activeSection={activeSection} setActiveSection={handleNavigate} />
       </main>
     );
   }
