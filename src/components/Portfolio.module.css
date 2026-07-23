@@ -131,3 +131,26 @@
     height: 280px;
   }
 }
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animatedBg {
+  background-size: 200% 200% !important;
+  animation: gradientShift 10s ease infinite;
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Optional overlay to give it a slight glass effect over the gradient */
+.animatedBg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top right, rgba(255,255,255,0.03), transparent 50%);
+  pointer-events: none;
+}

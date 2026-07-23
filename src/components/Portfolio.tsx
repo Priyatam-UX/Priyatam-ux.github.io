@@ -29,7 +29,7 @@ const projects = [
     title: 'JobPilot AI',
     github: 'https://github.com/Priyatam-UX/JobPilot-AI',
     live: 'https://jobspilotai.space/',
-    bgGradient: 'linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%)',
+    bgGradient: 'linear-gradient(45deg, #0f172a, #1e3a8a, #312e81, #0f172a)',
     tags: ['Python', 'FastAPI', 'React', 'Neon DB', 'LangGraph'],
     description: 'Enterprise AI-powered job application assistant automating search discovery, ATS optimization, and multi-agent workflows.',
   },
@@ -37,7 +37,7 @@ const projects = [
     title: 'StadiumPilot AI',
     github: 'https://github.com/Priyatam-UX/StadiumPilotBot',
     live: 'https://stadiumpilot-bot.vercel.app/',
-    bgGradient: 'linear-gradient(135deg, #1e1b4b 0%, #4c1d95 100%)',
+    bgGradient: 'linear-gradient(45deg, #1e1b4b, #4c1d95, #7e22ce, #1e1b4b)',
     tags: ['JavaScript', 'React', 'SVG Anim', 'Gemini 1.5'],
     description: 'AI command center and decision-support platform for large-scale tournament venues integrating live telemetry and Gemini AI.',
   },
@@ -45,7 +45,7 @@ const projects = [
     title: 'MonsoonShield AI',
     github: 'https://github.com/Priyatam-UX/MonsoonShield-AI',
     live: 'https://monsoon-shield-ai.vercel.app/',
-    bgGradient: 'linear-gradient(135deg, #064e3b 0%, #047857 100%)',
+    bgGradient: 'linear-gradient(45deg, #064e3b, #047857, #0f766e, #064e3b)',
     tags: ['TypeScript', 'Tailwind v4', 'PWA', 'Gemini Vision'],
     description: 'Preparedness and citizen assistance platform with real-time risk evaluations, offline PWA access, and AI safety overlays.',
   },
@@ -53,7 +53,7 @@ const projects = [
     title: 'Personal Cooking Planner',
     github: 'https://github.com/Priyatam-UX/Personal-Cooking-Planner',
     live: 'https://personal-cooking-planner.vercel.app/',
-    bgGradient: 'linear-gradient(135deg, #7c2d12 0%, #d97706 100%)',
+    bgGradient: 'linear-gradient(45deg, #7c2d12, #ea580c, #b45309, #7c2d12)',
     tags: ['JavaScript', 'Gemini API', 'Glassmorphism'],
     description: 'Client-side AI micro-app to generate custom daily cooking plans tailored to budget, diet, and existing pantry ingredients.',
   },
@@ -100,7 +100,9 @@ export default function Portfolio() {
               <div className="laser-card" style={{ height: '100%' }}>
                 <TiltCard className={`${styles.projectCard} laser-card-content`}>
                   <div 
+                    className={styles.animatedBg}
                     style={{ 
+
                       width: '100%', 
                       height: '100%', 
                       background: project.bgGradient,
