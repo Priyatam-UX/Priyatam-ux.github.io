@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Float, MeshDistortMaterial, MeshWobbleMaterial, TorusKnot, Sphere, Icosahedron, Stars, Cylinder, Ring, Torus } from '@react-three/drei';
 import * as THREE from 'three';
@@ -144,7 +144,20 @@ function CookingPlannerScene() {
   );
 }
 
-export default function Portfolio3DScenes({ type }: { type: string }) {
+export default function Portfolio3DScenes({ type, index = 0 }: { type: string, index?: number }) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    // Stagger the mounting of each WebGL scene by 400ms per index
+    // This prevents 4 WebGL contexts from compiling shaders at the exact same millisecond
+    const timer = setTimeout(() => {
+      setMounted(true);
+    }, index * 400);
+    return () => clearTimeout(timer);
+  }, [index]);
+
+  if (!mounted) return <div style={{ position: 'absolute', inset: 0, zIndex: 0, borderRadius: '15px', backgroundColor: 'var(--skin-color)', opacity: 0.02 }} />;
+
   return (
     <div style={{ position: 'absolute', inset: 0, zIndex: 0, borderRadius: '15px', overflow: 'hidden' }}>
       <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>

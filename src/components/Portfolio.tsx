@@ -76,9 +76,9 @@ export default function Portfolio() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [show3D, setShow3D] = useState(false);
   
-  // Delay mounting heavy WebGL contexts until after navigation animations finish
+  // Delay mounting heavy WebGL contexts until completely after the 1.5s navigation animations finish
   useEffect(() => {
-    const timer = setTimeout(() => setShow3D(true), 800);
+    const timer = setTimeout(() => setShow3D(true), 1600);
     return () => clearTimeout(timer);
   }, []);
   
@@ -123,7 +123,7 @@ export default function Portfolio() {
                 <TiltCard className={`${styles.projectCard} laser-card-content`}>
                   
                   {/* Localized 3D WebGL scenes acting as the card background */}
-                  {show3D && <Portfolio3DScenes type={project.id} />}
+                  {show3D && <Portfolio3DScenes type={project.id} index={index} />}
                   
                   <div className={styles.overlay}>
                     <div className={styles.overlayContent}>
